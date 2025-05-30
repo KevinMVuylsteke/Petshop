@@ -14,6 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import ar.edu.ort.parcial.ui.theme.ParcialTheme
 
 class MainActivity : ComponentActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
