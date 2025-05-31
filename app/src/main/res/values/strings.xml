@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Parcial</string>
+    <string name="onboarding_title">Meet your animal needs here</string>
+    <string name="onboarding_text">Get interesting promos here, register your account immediately so you can meet your animal needs.</string>
+    <string name="onboarding_button">Get Started</string>
+    <string name="google_component">Google</string>
 </resources>
