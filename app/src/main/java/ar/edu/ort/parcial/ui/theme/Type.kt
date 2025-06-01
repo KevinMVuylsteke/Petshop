@@ -2,9 +2,24 @@ package ar.edu.ort.parcial.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import ar.edu.ort.parcial.R.font
+
+val Poppins = FontFamily(
+    Font(font.poppins_regular,
+        FontWeight.Normal),
+    Font(font.poppins_medium,
+        FontWeight.Medium),
+    Font(font.poppins_light,
+        FontWeight.Light),
+    Font(font.poppins_bold,
+        FontWeight.Bold),
+    Font(font.poppins_semibold,
+        FontWeight.SemiBold),
+)
 
 // Set of Material typography styles to start with
 val Typography = Typography(

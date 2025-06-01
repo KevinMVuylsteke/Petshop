@@ -1,0 +1,48 @@
+package ar.edu.ort.parcial.ui.components
+
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import ar.edu.ort.parcial.ui.theme.Poppins
+import ar.edu.ort.parcial.ui.theme.Indigo
+
+@Composable
+fun ButtonCom(
+    text: String,
+) {
+    Button(
+        onClick = { /* Acción del botón */ },
+        modifier = Modifier
+            .width(327.dp)
+            .height(60.dp),
+        shape = RoundedCornerShape(30.5.dp),
+        contentPadding = PaddingValues(0.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Indigo
+        )
+    ) {
+        Text(
+            text = text,
+            modifier = Modifier,
+            textAlign = TextAlign.Center,
+            style = TextStyle(
+                fontFamily = Poppins,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                lineHeight = 29.sp, // 180% de 16sp
+                letterSpacing = 0.sp
+            )
+        )
+    }
+}
