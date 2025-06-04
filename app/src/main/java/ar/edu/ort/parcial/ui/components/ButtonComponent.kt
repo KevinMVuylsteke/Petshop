@@ -20,11 +20,42 @@ import ar.edu.ort.parcial.ui.theme.Indigo
 @Composable
 fun ButtonCom(
     text: String,
+    modifier: Modifier = Modifier // parámetro para modificar posición/tamaño
+) {
+    Button(
+        onClick = { /* Acción del botón */ },
+        modifier = modifier
+            .width(347.dp)
+            .height(60.dp),
+        shape = RoundedCornerShape(30.5.dp),
+        contentPadding = PaddingValues(0.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Indigo
+        )
+    ) {
+        Text(
+            text = text,
+            textAlign = TextAlign.Center,
+            style = TextStyle(
+                fontFamily = Poppins,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                lineHeight = 29.sp,
+                letterSpacing = 0.sp
+            )
+        )
+    }
+}
+
+/*
+@Composable
+fun ButtonCom(
+    text: String,
 ) {
     Button(
         onClick = { /* Acción del botón */ },
         modifier = Modifier
-            .width(327.dp)
+            .width(347.dp)
             .height(60.dp),
         shape = RoundedCornerShape(30.5.dp),
         contentPadding = PaddingValues(0.dp),
@@ -45,4 +76,4 @@ fun ButtonCom(
             )
         )
     }
-}
+}*/

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -28,6 +29,7 @@ import ar.edu.ort.parcial.R
 import ar.edu.ort.parcial.ui.components.ButtonCom
 import ar.edu.ort.parcial.ui.theme.Gris
 
+
 @Composable
 fun Onboarding() {
     Box(
@@ -37,14 +39,16 @@ fun Onboarding() {
     ) {
         Column(
             modifier = Modifier
-                .padding(top = 80.dp, start = 30.dp, end = 24.dp)
+                .fillMaxWidth()
+                .align(Alignment.TopStart)
+                .padding(top = 90.dp, start = 26.dp, end = 26.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.onboarding_title),
                 fontSize = 40.sp,
                 fontFamily = Poppins,
                 fontWeight = FontWeight.SemiBold,
-                lineHeight = 56.sp, // 140% de 40sp = 56sp
+                lineHeight = 56.sp,
                 letterSpacing = 0.sp,
                 modifier = Modifier
                     .width(297.dp)
@@ -54,8 +58,8 @@ fun Onboarding() {
                 painter = painterResource(id = R.drawable.illustration),
                 contentDescription = "Descripción de la imagen",
                 modifier = Modifier
-                    .size(318.57.dp) // ancho y alto
-                    .offset(x = 4.dp) // posición desde la esquina superior izquierda
+                    .size(318.57.dp)
+                    .offset(x = 4.dp)
             )
             Spacer(modifier = Modifier.height(28.dp))
             Text(
@@ -64,7 +68,7 @@ fun Onboarding() {
                 color = Gris,
                 fontFamily = Poppins,
                 fontWeight = FontWeight.Normal,
-                lineHeight = 21.sp, // 150% de 14px = 21px
+                lineHeight = 21.sp,
                 letterSpacing = 0.sp,
                 textAlign = TextAlign.Justify,
                 modifier = Modifier
@@ -79,11 +83,13 @@ fun Onboarding() {
                     .size(width = 44.dp, height = 8.dp)
                     .align(Alignment.CenterHorizontally)
             )
-            Spacer(modifier = Modifier.height(64.dp))
-            ButtonCom(
-                text = stringResource(id = R.string.onboarding_button),
-            )
         }
+        ButtonCom(
+            text = stringResource(id = R.string.onboarding_button),
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 30.dp)
+        )
     }
 }
 
