@@ -1,12 +1,11 @@
 package ar.edu.ort.parcial.ui.components
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -30,7 +29,10 @@ import ar.edu.ort.parcial.ui.theme.GrayLight
 import ar.edu.ort.parcial.ui.theme.Poppins
 
 @Composable
-fun GoogleCom() {
+fun ButtonIcon(
+    @DrawableRes iconResId: Int,
+    text: String
+) {
         Button(
         onClick = { /* Acción del botón */ },
         modifier = Modifier
@@ -47,14 +49,16 @@ fun GoogleCom() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painter = painterResource(id = R.drawable.google_icon_png), // reemplazá con tu imagen
-                contentDescription = "Google icon",
+                //painter = painterResource(id = R.drawable.google_icon_png), // reemplazá con tu imagen
+                painter = painterResource(id = iconResId),
+                contentDescription = "Icon",
                 modifier = Modifier
                     .size(25.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = stringResource(id = R.string.google_component),
+                //text = stringResource(id = R.string.google_component),
+                text = text,
                 color = Blue,
                 fontFamily = Poppins,
                 fontWeight = FontWeight.SemiBold,
@@ -66,9 +70,9 @@ fun GoogleCom() {
     }
 }
 
-
 @Preview()
 @Composable
 fun GoogleComPreview() {
-    GoogleCom()
+    ButtonIcon(iconResId = R.drawable.google_icon_png,
+        text = stringResource(id = R.string.google_component),)
 }
