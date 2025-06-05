@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.*
@@ -21,12 +22,56 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ar.edu.ort.parcial.R // Asegúrate de importar tu R file para los drawables
+import ar.edu.ort.parcial.R
+import ar.edu.ort.parcial.ui.viewmodels.FavoriteState
+import ar.edu.ort.parcial.ui.viewmodels.ProductDetailViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductDetailScreen(product: ProductDetail) {
+fun ProductDetailScreen(
+    product: ProductDetail,
+    viewModel: ProductDetailViewModel = viewModel() // Instancia o inyecta el ViewModel
+) {
     var quantity by remember { mutableStateOf(1) } // Estado para la cantidad
+
+    // Observar el estado de la operación de favorito desde el ViewModel
+    val favoriteStatus by viewModel.favoriteStatus.collectAsState()
+
+    // Estado local para el icono de corazón.
+    // En una aplicación real, este estado inicial debería venir de tu API/BD
+    // indicando si el producto ya es favorito para el usuario actual.
+    var isFavorite by remember { mutableStateOf(false) }
+
+    // Obtenemos un CoroutineScope para lanzar corrutinas dentro del Composable.
+    // Esto es necesario para llamar funciones de suspensión como showSnackbar.
+    val scope = rememberCoroutineScope() // <--- NUEVO: Obtenemos un ámbito de corrutina
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    // Usar LaunchedEffect para reaccionar a los cambios en el estado de favoriteStatus
+    LaunchedEffect(favoriteStatus) {
+        when (favoriteStatus) {
+            is FavoriteState.Success -> {
+                val message = (favoriteStatus as FavoriteState.Success).message
+                snackbarHostState.showSnackbar(message) // Aquí ya estamos en una corrutina (LaunchedEffect)
+                isFavorite = !isFavorite // Alternar el estado del icono si la API confirma la acción
+                // Opcional: podrías resetear el estado del ViewModel a Idle si lo necesitas
+                // viewModel.resetFavoriteState() // Necesitarías añadir esta función en tu ViewModel
+            }
+            is FavoriteState.Error -> {
+                val message = (favoriteStatus as FavoriteState.Error).message
+                snackbarHostState.showSnackbar("Error: $message", withDismissAction = true) // Aquí también
+            }
+            FavoriteState.Loading -> {
+                // Podrías mostrar un indicador de carga aquí, aunque para un icono pequeño no es crucial
+            }
+            FavoriteState.Idle -> {
+                // No hacer nada
+            }
+        }
+    }
+
 
     Scaffold(
         topBar = {
@@ -41,19 +86,34 @@ fun ProductDetailScreen(product: ProductDetail) {
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* TODO: Handle back action */ }) {
+                    IconButton(onClick = { /* TODO: Handle back action (ej. navController.popBackStack()) */ }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /* TODO: Handle favorite action */ }) {
-                        Icon(Icons.Filled.FavoriteBorder, contentDescription = "Favorite")
+                    IconButton(onClick = {
+                        // <--- CAMBIO CLAVE AQUÍ: Lanzamos una corrutina con 'scope.launch'
+                        scope.launch {
+                            if (product.id != null) { // Asegúrate de que el ID no sea nulo
+                                viewModel.addOrRemoveFavorite(product.id)
+                            } else {
+                                // Esta llamada a showSnackbar también necesita estar dentro de una corrutina
+                                snackbarHostState.showSnackbar("Error: El producto no tiene un ID válido para favoritos.")
+                            }
+                        }
+                    }) {
+                        Icon(
+                            imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                            contentDescription = "Favorite",
+                            tint = if (isFavorite) Color.Red else Color.Gray // Corazón rojo si es favorito, gris si no
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
             )
         },
-        containerColor = Color.White // Fondo de la pantalla
+        containerColor = Color.White, // Fondo de la pantalla
+        snackbarHost = { SnackbarHost(snackbarHostState) } // Agrega el SnackbarHost
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -183,23 +243,24 @@ fun ProductDetailScreen(product: ProductDetail) {
     }
 }
 
-// Mantén esta data class ProductDetail si no la tienes en un archivo separado
+// *** IMPORTANTE: MODIFICAMOS ProductDetail para incluir un 'id' ***
 data class ProductDetail(
+    val id: String?, // Añade un ID para el producto. Es crucial para el ViewModel y la API. Puede ser String o Int.
     val name: String,
     val description: String,
     val price: String,
-    val imageRes: Int // Aunque ahora usemos dos, este podría ser para la imagen principal en otras vistas
+    val imageRes: Int
 )
-
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewProductDetailScreen() {
     val sampleProduct = ProductDetail(
+        id = "prod_rc_adult", // Ejemplo de ID para el preview
         name = "Royal Canin Adult",
         description = "The Persian cat has the longest and densest coat of all cat breeds. This means that it typically needs to consume more skin-health focused nutrients than other cat breeds. That's why ROYAL CANIN® Persian Adult contains an exclusive complex of nutrients to help the skin’s barrier defence role to maintain good skin and coat health.",
         price = "12,99",
-        imageRes = R.drawable.fotocomidagatos // Usamos la imagen grande para este atributo en el preview
+        imageRes = R.drawable.fotocomidagatos
     )
     MaterialTheme {
         ProductDetailScreen(product = sampleProduct)
