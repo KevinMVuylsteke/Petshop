@@ -26,12 +26,15 @@ import ar.edu.ort.parcial.R
 import ar.edu.ort.parcial.ui.viewmodels.FavoriteState
 import ar.edu.ort.parcial.ui.viewmodels.ProductDetailViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.coroutines.launch 
+import kotlinx.coroutines.launch
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailScreen(
     product: ProductDetail,
+    navController: NavController,
     viewModel: ProductDetailViewModel = viewModel() // Instancia o inyecta el ViewModel
 ) {
     var quantity by remember { mutableStateOf(1) } // Estado para la cantidad
@@ -86,7 +89,7 @@ fun ProductDetailScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* TODO: Handle back action (ej. navController.popBackStack()) */ }) {
+                    IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 },
@@ -262,7 +265,8 @@ fun PreviewProductDetailScreen() {
         price = "12,99",
         imageRes = R.drawable.fotocomidagatos
     )
+    val navController = rememberNavController()
     MaterialTheme {
-        ProductDetailScreen(product = sampleProduct)
+        ProductDetailScreen(product = sampleProduct, navController = navController)
     }
 }

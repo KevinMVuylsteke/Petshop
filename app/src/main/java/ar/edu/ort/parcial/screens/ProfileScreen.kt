@@ -1,13 +1,12 @@
-package ar.edu.ort.parcial.ui.screens
+package ar.edu.ort.parcial.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.* // Importaciones de Material 3
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
@@ -22,42 +21,40 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-
-import ar.edu.ort.parcial.ui.components.BottomNavBar
 import ar.edu.ort.parcial.R
-// import ar.edu.ort.parcial.ui.theme.LightGray // Asegúrate de que esta importación sea correcta si usas un color LightGray definido
+import ar.edu.ort.parcial.navigation.NavRoutes.SELLER
+import ar.edu.ort.parcial.navigation.NavRoutes.BESTSELLER
+import ar.edu.ort.parcial.ui.components.BottomNavBar
 
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavController
 
 @Composable
 fun ProfileScreen(navController: NavController) {
-    Scaffold(
-        bottomBar = { BottomNavBar(navController = navController) }
-    ) { paddingValues ->
+    Scaffold (bottomBar = { BottomNavBar(navController = navController) }
+    ){ paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(Color(0xFFF0F0F0)) // Fondo general de la pantalla
+                .background(Color(0xFFF0F0F0))
         ) {
-            HeaderSection()
+            HeaderSection(navController)
             ActionButtonsSection()
-            ProductsSection()
+            ProductsSection(navController)
         }
     }
 }
 
 @Composable
-fun HeaderSection() {
+fun HeaderSection(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight() // La altura se ajustará al contenido
-            .background(Color(0xFFF0F0F0)), // Fondo general gris claro para la sección
-        horizontalAlignment = Alignment.CenterHorizontally // Para centrar la foto de perfil y el nombre
+            .wrapContentHeight()
+            .background(Color(0xFFF0F0F0)),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // --- Botones Profile / Seller separados del banner ---
         Row(
             modifier = Modifier
                 .padding(top = 24.dp)
@@ -67,38 +64,36 @@ fun HeaderSection() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Button(
-                onClick = { /* Acción para Profile */ },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7140FD)), // ¡COLOR CAMBIADO AQUÍ!
+                onClick = {  },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7140FD),
+                    contentColor = Color.White ),
                 shape = RoundedCornerShape(20.dp),
                 elevation = ButtonDefaults.buttonElevation(0.dp),
                 modifier = Modifier
-                    .width(120.dp)
+                    .width(130.dp)
                     .height(36.dp)
             ) {
-                Text("Profile", color = Color.White, fontSize = 14.sp)
+                Text("Profile", fontSize = 14.sp)
             }
 
             Spacer(modifier = Modifier.width(8.dp))
 
             Button(
-                onClick = { /* Acción para Seller Mode */ },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,
-                    contentColor = Color.LightGray
+                onClick = { navController.navigate(SELLER) },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray,
+                    contentColor = Color.DarkGray
+
                 ),
                 shape = RoundedCornerShape(20.dp),
                 elevation = ButtonDefaults.buttonElevation(0.dp),
                 modifier = Modifier
-                    .width(120.dp)
+                    .width(130.dp)
                     .height(36.dp)
             ) {
-                Text("Seller", fontSize = 14.sp)
+                Text("Seller Mode", fontSize = 14.sp)
             }
         }
-
         Spacer(modifier = Modifier.height(12.dp))
-
-        // --- Banner con fondo gris separado ---
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -115,14 +110,12 @@ fun HeaderSection() {
             contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.fotoperfil),
+                painter = painterResource(id = R.drawable.mask_group),
                 contentDescription = "Header Background Banner",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
         }
-
-        // --- Avatar y nombre superpuestos ---
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -134,24 +127,21 @@ fun HeaderSection() {
                     .size(110.dp)
                     .shadow(10.dp, shape = CircleShape)
                     .clip(CircleShape)
-                    .background(Color.White)
-                    .border(2.dp, Color(0xFF7140FD), CircleShape), // ¡COLOR CAMBIADO AQUÍ!
+                    .background(Color.White),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.fotoavatar),
+                    painter = painterResource(id = R.drawable.pittashop),
                     contentDescription = "Profile Picture",
                     modifier = Modifier
-                        .size(95.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop
+                        .size(46.dp),
                 )
             }
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Juan",
+                text = "Pittashop",
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
@@ -160,18 +150,17 @@ fun HeaderSection() {
     }
 }
 
-
 @Composable
 fun ActionButtonsSection() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 16.dp), // Ajusta este padding. Podría necesitar un offset negativo si quieres que los botones invadan la foto de perfil.
+            .padding(top = 16.dp),
         horizontalArrangement = Arrangement.Center
     ) {
         Button(
             onClick = { /* Acción para "Saved" */ },
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7140FD)), // ¡COLOR CAMBIADO AQUÍ!
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7140FD)),
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier.width(120.dp)
         ) {
@@ -195,7 +184,7 @@ fun ActionButtonsSection() {
 }
 
 @Composable
-fun ProductsSection() {
+fun ProductsSection(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -208,19 +197,21 @@ fun ProductsSection() {
             ProductCard(
                 imageResId = R.drawable.fotocomidaperros,
                 name = "RC Kittan",
-                price = "$20,99"
+                price = "$20,99",
+                onClick = { navController.navigate(BESTSELLER) }
             )
             ProductCard(
                 imageResId = R.drawable.comidaparagatos2,
                 name = "RC Persion",
-                price = "$22,99"
+                price = "$22,99",
+                onClick = { navController.navigate(BESTSELLER) }
             )
         }
     }
 }
 
 @Composable
-fun ProductCard(imageResId: Int, name: String, price: String) {
+fun ProductCard(imageResId: Int, name: String, price: String,onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .width(160.dp)
@@ -261,11 +252,11 @@ fun ProductCard(imageResId: Int, name: String, price: String) {
                     color = Color.Black
                 )
                 IconButton(
-                    onClick = { /* Acción para añadir al carrito */ },
+                    onClick = onClick,
                     modifier = Modifier
                         .size(43.dp)
                         .clip(CircleShape)
-                        .background(Color(0xFF7140FD)) // ¡COLOR CAMBIADO AQUÍ!
+                        .background(Color(0xFF7140FD))
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,

@@ -23,14 +23,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import ar.edu.ort.parcial.ui.theme.Poppins
 import ar.edu.ort.parcial.ui.theme.White
 import ar.edu.ort.parcial.R
 import ar.edu.ort.parcial.ui.components.ButtonCom
 import ar.edu.ort.parcial.ui.theme.Gris
+import androidx.navigation.compose.rememberNavController
+
 
 @Composable
-fun Onboarding(onNavigateToLogin: () -> Unit) {
+fun Onboarding(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -88,7 +91,7 @@ fun Onboarding(onNavigateToLogin: () -> Unit) {
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 30.dp),
-            onClick = { onNavigateToLogin() },
+            onClick = { navController.navigate("LoginIn")  },
             enabled = true
         )
     }
@@ -97,5 +100,6 @@ fun Onboarding(onNavigateToLogin: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun OnboardingPreview() {
-    Onboarding(onNavigateToLogin = {})
+    val navController = rememberNavController()
+    Onboarding(navController = navController)
 }

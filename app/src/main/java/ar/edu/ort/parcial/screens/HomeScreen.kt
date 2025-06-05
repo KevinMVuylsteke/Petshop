@@ -2,6 +2,7 @@ package ar.edu.ort.parcial.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,33 +39,37 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial.R
+import ar.edu.ort.parcial.navigation.NavRoutes
+import ar.edu.ort.parcial.navigation.NavRoutes.BESTSELLER
 import ar.edu.ort.parcial.ui.components.BottomNavBar
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavHostController) {
     Scaffold(
-        topBar = { TopBar() },
+        topBar = { TopBar(navController) },
         bottomBar = { BottomNavBar(navController) }
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {
             LocationSection()
             PromoSection()
             CategorySection()
-            BestSellerSection()
+            BestSellerSection(navController)
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar() {
+fun TopBar(navController: NavController) {
     TopAppBar(
         title = {},
         actions = {
@@ -95,7 +100,7 @@ fun TopBar() {
                         .background(Color.LightGray.copy(alpha = 0.3f), CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    IconButton(onClick = { /* TODO: Notifications */ }) {
+                    IconButton(onClick = {  navController.navigate(NavRoutes.NOTIFICATION) }) {
                         Icon(Icons.Default.Notifications, contentDescription = "Notifications", tint = Color.Black)
                     }
                 }
@@ -211,14 +216,27 @@ fun CategorySection() {
 }
 
 @Composable
-fun BestSellerSection() {
+fun BestSellerSection(navController: NavHostController) {
     Column(modifier = Modifier.padding(16.dp)) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
+        Row(horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Best Seller", fontWeight = FontWeight.Bold)
-            Text("View All", color = Color.Gray)
+            Text( text = "Best Seller",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                lineHeight = 29.sp, // 180% of 16px = 28.8px ≈ 29.sp
+                letterSpacing = 0.sp,
+                fontFamily = FontFamily.Default )
+            Text(
+                text = "View All",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+                lineHeight = 19.sp,
+                letterSpacing = 0.sp,
+                color = Color(0xFF7140FD),
+                fontFamily = FontFamily.Default,
+                modifier = Modifier.clickable { navController.navigate(BESTSELLER) }
+            )
         }
         Spacer(modifier = Modifier.height(8.dp))
         LazyRow {

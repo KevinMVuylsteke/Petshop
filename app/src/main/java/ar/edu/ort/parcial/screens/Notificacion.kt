@@ -5,13 +5,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,6 +18,8 @@ import androidx.compose.ui.unit.sp
 import ar.edu.ort.parcial.R
 import ar.edu.ort.parcial.ui.components.AccionDerechaNotificacion
 import ar.edu.ort.parcial.ui.components.AvatarNotificacion
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 
 enum class TabNotificacion {
@@ -26,7 +27,7 @@ enum class TabNotificacion {
 }
 
 @Composable
-fun NotificationScreen(tabInicial: TabNotificacion = TabNotificacion.Actividad) {
+fun NotificationScreen(navController: NavController,tabInicial: TabNotificacion = TabNotificacion.Actividad) {
     var tabSeleccionado by remember { mutableStateOf(tabInicial) }
 
     Column(
@@ -34,7 +35,7 @@ fun NotificationScreen(tabInicial: TabNotificacion = TabNotificacion.Actividad) 
             .fillMaxSize()
             .background(Color.White)
     ) {
-        BarraSuperiorNotificacion()
+        BarraSuperiorNotificacion(navController)
         TabsNotificacion(tabSeleccionado) { tabSeleccionado = it }
         when (tabSeleccionado) {
             TabNotificacion.Actividad -> ContenidoActividad()
@@ -44,7 +45,7 @@ fun NotificationScreen(tabInicial: TabNotificacion = TabNotificacion.Actividad) 
 }
 
 @Composable
-fun BarraSuperiorNotificacion() {
+fun BarraSuperiorNotificacion(navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -52,11 +53,14 @@ fun BarraSuperiorNotificacion() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            imageVector = Icons.Default.ArrowBack,
+            painter = painterResource(id = R.drawable.arrowleft),
+            //imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             contentDescription = "Volver",
-            modifier = Modifier.clickable { /* TODO: Volver */ }
+            modifier = Modifier
+                .size(24.dp)
+                .clickable { navController.popBackStack() }
         )
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.width(26.dp))
         Text("Notification", fontSize = 20.sp, fontWeight = FontWeight.Bold)
     }
 }
@@ -132,6 +136,8 @@ fun ContenidoModoVendedor() {
         Notificacion("Ola", "Liked your Product", R.drawable.fotoavatar3, R.drawable.comidaparagatos2),
         Notificacion("Raul", "Liked your Product", R.drawable.fotoavatar, R.drawable.comidaparagatos2),
         Notificacion("You Got New Order!", "Please arrange delivery", R.drawable.fotocomidagatos, R.drawable.comidaparagatos2, conFlechaDerecha = true),
+        Notificacion("You Got New Order!", "Please arrange delivery", R.drawable.fotocomidagatos, R.drawable.comidaparagatos2, conFlechaDerecha = true),
+        Notificacion("You Got New Order!", "Please arrange delivery", R.drawable.fotocomidagatos, R.drawable.comidaparagatos2, conFlechaDerecha = true),
         Notificacion("Vito", "Liked your Product", R.drawable.fotoavatar3, R.drawable.comidaparagatos2)
     )
 
@@ -176,5 +182,6 @@ fun ItemNotificacionVendedor(notificacion: Notificacion) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun NotificationScreenModoVendedorPreview() {
-    NotificationScreen(tabInicial = TabNotificacion.ModoVendedor)
+    val navController = rememberNavController()
+    NotificationScreen(navController,tabInicial = TabNotificacion.ModoVendedor)
 }

@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial.ui.screens
+package ar.edu.ort.parcial.screens
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,30 +11,31 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource // Asegúrate de importar esto
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ar.edu.ort.parcial.R // Importa tu archivo R para los drawables
+import ar.edu.ort.parcial.R
 import ar.edu.ort.parcial.ui.components.ProductCard
-import ar.edu.ort.parcial.ui.components.Product // Importa la data class Product
+import ar.edu.ort.parcial.ui.components.Product
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BestSellerScreen()
+            val navController = rememberNavController()
+            BestSellerScreen(navController)
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BestSellerScreen() {
+fun BestSellerScreen(navController: NavController) {
     // Aquí es donde puedes definir tus productos reales.
     // Asegúrate de que R.drawable.comidaparagatos2 y R.drawable.fotocomidagatos
     // existan en tu carpeta `res/drawable`.
@@ -60,7 +61,7 @@ fun BestSellerScreen() {
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* Manejar acción de retroceso */ }) {
+                    IconButton(onClick = {  navController.popBackStack()  }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver")
                     }
                 },
@@ -91,5 +92,6 @@ fun BestSellerScreen() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewBestSellerScreen() {
-    BestSellerScreen()
+    val navController = rememberNavController()
+    BestSellerScreen(navController = navController)
 }

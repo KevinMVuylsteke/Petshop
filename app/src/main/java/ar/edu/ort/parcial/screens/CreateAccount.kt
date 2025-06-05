@@ -31,8 +31,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
+
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+
 @Composable
-fun CreateAccount(onCreateToLogin: () -> Unit) {
+fun CreateAccount(navController: NavHostController) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -98,13 +102,13 @@ fun CreateAccount(onCreateToLogin: () -> Unit) {
             TextLink(
                 text = stringResource(id = R.string.create_link1),
                 text2 = stringResource(id = R.string.create_link2),
-                onClickText2 = { onCreateToLogin() }
+                onClickText2 = { navController.navigate("LoginIn") }
             )
             Spacer(modifier = Modifier.height(36.dp))
             ButtonCom(
                 text = stringResource(id = R.string.onboarding_button),
                 enabled = isButtonEnabled,
-                onClick = {onCreateToLogin()}
+                onClick = {navController.navigate("LoginIn")}
             )
         }
     }
@@ -113,5 +117,6 @@ fun CreateAccount(onCreateToLogin: () -> Unit) {
 @Preview()
 @Composable
 fun CreateAccountPreview() {
-    CreateAccount(onCreateToLogin = {})
+    val navController = rememberNavController()
+    CreateAccount(navController = navController)
 }
