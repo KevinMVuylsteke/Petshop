@@ -18,13 +18,13 @@ import ar.edu.ort.parcial.ui.theme.Gray30
 import ar.edu.ort.parcial.ui.theme.Poppins
 
 @Composable
-fun FieldCom(text: String
+fun FieldCom(text: String, value: String, onValueChange: (String) -> Unit
 ){
-    var textual by remember { mutableStateOf("") }
+   // var textual by remember { mutableStateOf("") }
 
     OutlinedTextField(
-        value=textual,
-        onValueChange ={textual = it},
+        value=value,//textual,
+        onValueChange =onValueChange,
         placeholder={Text(text=text,
             color = Gray30,
             style = TextStyle(

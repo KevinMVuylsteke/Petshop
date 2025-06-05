@@ -30,8 +30,20 @@ import ar.edu.ort.parcial.ui.theme.Gris
 import ar.edu.ort.parcial.ui.components.FieldCom
 import ar.edu.ort.parcial.ui.components.TextLink
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+
+
 @Composable
-fun LoginIn() {
+fun LoginIn(onNavigateToCreate: () -> Unit) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var showPasswordError by remember { mutableStateOf(false) }
+
+    val isButtonEnabled = email.isNotBlank() && password.isNotBlank()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -62,9 +74,31 @@ fun LoginIn() {
                 letterSpacing = 0.sp
             )
             Spacer(modifier = Modifier.height(30.dp))
-            FieldCom(text = stringResource(id = R.string.field_email))
+            FieldCom(
+                text = stringResource(id = R.string.field_email),
+                value = email,
+                onValueChange = { email = it }
+            )
             Spacer(modifier = Modifier.height(18.dp))
-            FieldCom(text = stringResource(id = R.string.field_pass))
+            FieldCom(
+                text = stringResource(id = R.string.field_pass),
+                value = password,
+                onValueChange = {
+                    password = it
+                    if (it.isNotBlank()) {
+                        showPasswordError = false
+                    }
+                }
+            )
+            if (showPasswordError) {
+                Text(
+                    text = "Password Required Fields",
+                    color = androidx.compose.ui.graphics.Color.Red,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(start = 4.dp, top = 4.dp)
+                )
+            }
             Spacer(modifier = Modifier.height(24.dp))
             Image(
                 painter = painterResource(id = R.drawable.or),
@@ -94,11 +128,14 @@ fun LoginIn() {
         ) {
             TextLink(
                 text = stringResource(id = R.string.field_create),
-                text2 = stringResource(id = R.string.field_create)
+                text2 = stringResource(id = R.string.field_create_acc),
+                onClickText2 = { onNavigateToCreate() }
             )
             Spacer(modifier = Modifier.height(36.dp))
             ButtonCom(
-                text = stringResource(id = R.string.onboarding_button)
+                text = stringResource(id = R.string.onboarding_button),
+                enabled = isButtonEnabled,
+                onClick = {onNavigateToCreate()}
             )
         }
     }
@@ -107,5 +144,5 @@ fun LoginIn() {
 @Preview()
 @Composable
 fun LoginInPreview() {
-    LoginIn()
+    LoginIn(onNavigateToCreate = {})
 }

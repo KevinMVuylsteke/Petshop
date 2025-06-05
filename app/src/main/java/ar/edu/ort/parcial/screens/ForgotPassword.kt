@@ -25,8 +25,17 @@ import ar.edu.ort.parcial.ui.theme.Gris
 import ar.edu.ort.parcial.ui.theme.Poppins
 import ar.edu.ort.parcial.ui.theme.White
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+
 @Composable
 fun ForgotPassword() {
+    var email by remember { mutableStateOf("") }
+
+    val isButtonEnabled = email.isNotBlank()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -57,7 +66,11 @@ fun ForgotPassword() {
                 letterSpacing = 0.sp
             )
             Spacer(modifier = Modifier.height(30.dp))
-            FieldCom(text = stringResource(id = R.string.field_email))
+            FieldCom(
+                text = stringResource(id = R.string.field_email),
+                value = email,
+                onValueChange = { email = it }
+            )
         }
         Column(
             modifier = Modifier
@@ -72,7 +85,9 @@ fun ForgotPassword() {
             Spacer(modifier = Modifier.height(36.dp))
             ButtonCom(
                 text = stringResource(id = R.string.onboarding_button),
-                modifier = Modifier
+                enabled = isButtonEnabled,
+                modifier = Modifier,
+                onClick = {/* Acción botón*/ }
             )
         }
     }
@@ -83,3 +98,4 @@ fun ForgotPassword() {
 fun ForgotPasswordPreview() {
     ForgotPassword()
 }
+

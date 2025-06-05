@@ -26,8 +26,19 @@ import ar.edu.ort.parcial.ui.theme.Gris
 import ar.edu.ort.parcial.ui.theme.Poppins
 import ar.edu.ort.parcial.ui.theme.White
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+
 @Composable
-fun CreateAccount() {
+fun CreateAccount(onCreateToLogin: () -> Unit) {
+    var name by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    val isButtonEnabled = name.isNotBlank() && email.isNotBlank() && password.isNotBlank()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -58,11 +69,23 @@ fun CreateAccount() {
                 letterSpacing = 0.sp
             )
             Spacer(modifier = Modifier.height(30.dp))
-            FieldCom(text = stringResource(id = R.string.field_name))
+            FieldCom(
+                text = stringResource(id = R.string.field_name),
+                value = name,
+                onValueChange = { name = it }
+            )
             Spacer(modifier = Modifier.height(18.dp))
-            FieldCom(text = stringResource(id = R.string.field_email))
+            FieldCom(
+                text = stringResource(id = R.string.field_email),
+                value = email,
+                onValueChange = { email = it }
+            )
             Spacer(modifier = Modifier.height(18.dp))
-            FieldCom(text = stringResource(id = R.string.field_pass))
+            FieldCom(
+                text = stringResource(id = R.string.field_pass),
+                value = password,
+                onValueChange = { password = it }
+            )
             Spacer(modifier = Modifier.height(24.dp))
             CheckTerms()
         }
@@ -74,11 +97,14 @@ fun CreateAccount() {
         ) {
             TextLink(
                 text = stringResource(id = R.string.create_link1),
-                text2 = stringResource(id = R.string.create_link2)
+                text2 = stringResource(id = R.string.create_link2),
+                onClickText2 = { onCreateToLogin() }
             )
             Spacer(modifier = Modifier.height(36.dp))
             ButtonCom(
-                text = stringResource(id = R.string.onboarding_button)
+                text = stringResource(id = R.string.onboarding_button),
+                enabled = isButtonEnabled,
+                onClick = {onCreateToLogin()}
             )
         }
     }
@@ -87,5 +113,5 @@ fun CreateAccount() {
 @Preview()
 @Composable
 fun CreateAccountPreview() {
-    CreateAccount()
+    CreateAccount(onCreateToLogin = {})
 }

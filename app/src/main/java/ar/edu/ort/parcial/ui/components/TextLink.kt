@@ -1,6 +1,5 @@
 package ar.edu.ort.parcial.ui.components
-
-import androidx.annotation.StringRes
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,18 +15,21 @@ import ar.edu.ort.parcial.ui.theme.Poppins
 import ar.edu.ort.parcial.ui.theme.Violet
 
 @Composable
-fun TextLink( text: String,
-              text2: String) {
-    Row (
+fun TextLink(
+    text: String,
+    text2: String,
+    onClickText2: () -> Unit = {} // parámetro lambda para la acción click
+) {
+    Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
         Text(
-            text =  text,
+            text = text,
             fontFamily = Poppins,
             fontWeight = FontWeight.Normal,
             fontSize = 12.sp,
-            lineHeight = 19.2.sp, // 160% de 12px
+            lineHeight = 19.2.sp,
             letterSpacing = 0.sp,
         )
         Text(
@@ -35,15 +37,23 @@ fun TextLink( text: String,
             fontFamily = Poppins,
             fontWeight = FontWeight.Bold,
             fontSize = 12.sp,
-            lineHeight = 18.sp, // 150% de 12px
+            lineHeight = 18.sp,
             letterSpacing = 0.sp,
-            color = Violet
+            color = Violet,
+            modifier = Modifier.clickable { onClickText2() } // aquí el clickable
         )
     }
 }
+
 @Preview()
 @Composable
 fun TextLinkPreview() {
-    TextLink(text = stringResource(id = R.string.field_create),
-        text2 = stringResource(id = R.string.field_create_acc),)
+    TextLink(
+        text = stringResource(id = R.string.field_create),
+        text2 = stringResource(id = R.string.field_create_acc),
+        onClickText2 = {
+            println("¡Se hizo click en el texto 2!")
+            // Aquí puede ir una navegación o cualquier acción que quieras
+        }
+    )
 }
