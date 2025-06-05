@@ -23,4 +23,12 @@
     <string name="forgot_title">Forgot&#10;Password</string>
     <string name="field_name2">Full Name</string>
     <string name="field_name3">Full Name</string>
+
+    <string name="payment_title">Payment Method</string>
+    <string name="payment_text">Add New Payment</string>
+    <string name="field_number">Card number</string>
+    <string name="field_cname">Card Name</string>
+    <string name="field_expired">Expired</string>
+    <string name="field_cvv">CVV</string>
+    <string name="payment_button">Save</string>
 </resources>

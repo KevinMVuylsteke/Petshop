@@ -4,15 +4,30 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import ar.edu.ort.parcial.ui.theme.ParcialTheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import ar.edu.ort.parcial.navigation.AppNavigation
+import androidx.navigation.compose.rememberNavController
 
+
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            ParcialTheme {
+                Surface(color = MaterialTheme.colorScheme.background) {
+                    val navController = rememberNavController()
+                    AppNavigation(navController)
+                }
+            }
+        }
+    }
+}
+
+/*
 class MainActivity : ComponentActivity() {
 
 
@@ -46,4 +61,4 @@ fun GreetingPreview() {
     ParcialTheme {
         Greeting("Android")
     }
-}
+}*/

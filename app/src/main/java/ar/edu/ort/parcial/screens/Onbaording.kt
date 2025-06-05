@@ -29,9 +29,8 @@ import ar.edu.ort.parcial.R
 import ar.edu.ort.parcial.ui.components.ButtonCom
 import ar.edu.ort.parcial.ui.theme.Gris
 
-
 @Composable
-fun Onboarding() {
+fun Onboarding(onNavigateToLogin: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -88,13 +87,15 @@ fun Onboarding() {
             text = stringResource(id = R.string.onboarding_button),
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 30.dp)
+                .padding(bottom = 30.dp),
+            onClick = { onNavigateToLogin() },
+            enabled = true
         )
     }
 }
 
-@Preview()
+@Preview(showBackground = true)
 @Composable
 fun OnboardingPreview() {
-    Onboarding()
+    Onboarding(onNavigateToLogin = {})
 }
