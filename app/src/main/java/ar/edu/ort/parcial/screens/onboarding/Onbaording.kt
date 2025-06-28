@@ -87,7 +87,7 @@ fun Onboarding(navController: NavHostController) {
             )
         }
         ButtonCom(
-            text = stringResource(id = R.string.onboarding_button),
+            text = stringResource(id = R.string.button_get),
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 30.dp),
