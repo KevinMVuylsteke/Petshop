@@ -87,12 +87,12 @@ fun ForgotNewPassword() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TextLink(
-                text = stringResource(id = R.string.create_link1),
-                text2 = stringResource(id = R.string.create_link2)
+                text = stringResource(id = R.string.create_textlink1),
+                text2 = stringResource(id = R.string.create_textlink2)
             )
             Spacer(modifier = Modifier.height(36.dp))
             ButtonCom(
-                text = stringResource(id = R.string.onboarding_button),
+                text = stringResource(id = R.string.button_get),
                 enabled = isButtonEnabled,
                 modifier = Modifier,
                 onClick = {/* Acción botón*/ }

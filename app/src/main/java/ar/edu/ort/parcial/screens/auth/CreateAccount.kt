@@ -31,7 +31,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
-
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
@@ -64,7 +63,7 @@ fun CreateAccount(navController: NavHostController) {
             )
             Spacer(modifier = Modifier.height(30.dp))
             Text(
-                text = stringResource(id = R.string.login_in_text),
+                text = stringResource(id = R.string.create_text),
                 fontFamily = Poppins,
                 fontWeight = FontWeight.SemiBold,
                 color = Gris,
@@ -100,13 +99,13 @@ fun CreateAccount(navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TextLink(
-                text = stringResource(id = R.string.create_link1),
-                text2 = stringResource(id = R.string.create_link2),
+                text = stringResource(id = R.string.create_textlink1),
+                text2 = stringResource(id = R.string.create_textlink2),
                 onClickText2 = { navController.navigate("LoginIn") }
             )
             Spacer(modifier = Modifier.height(36.dp))
             ButtonCom(
-                text = stringResource(id = R.string.onboarding_button),
+                text = stringResource(id = R.string.button_get),
                 enabled = isButtonEnabled,
                 onClick = {navController.navigate("LoginIn")}
             )

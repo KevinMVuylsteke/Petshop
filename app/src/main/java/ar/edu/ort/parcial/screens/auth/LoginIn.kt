@@ -29,7 +29,6 @@ import ar.edu.ort.parcial.ui.theme.White
 import ar.edu.ort.parcial.ui.theme.Gris
 import ar.edu.ort.parcial.ui.components.FieldCom
 import ar.edu.ort.parcial.ui.components.TextLink
-
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -95,7 +94,7 @@ fun LoginIn(navController: NavHostController) {
             )
             if (showPasswordError) {
                 Text(
-                    text = "Password Required Fields",
+                    text = stringResource(id = R.string.field_pass_error),
                     color = Color.Red,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
@@ -136,7 +135,7 @@ fun LoginIn(navController: NavHostController) {
             )
             Spacer(modifier = Modifier.height(36.dp))
             ButtonCom(
-                text = stringResource(id = R.string.onboarding_button),
+                text = stringResource(id = R.string.button_get),
                 enabled = isButtonEnabled,
                 onClick = {navController.navigate("Home")}
             )
