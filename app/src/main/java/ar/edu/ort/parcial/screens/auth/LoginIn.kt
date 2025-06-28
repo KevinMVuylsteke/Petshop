@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial.screens
+package ar.edu.ort.parcial.screens.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,6 +34,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -95,7 +96,7 @@ fun LoginIn(navController: NavHostController) {
             if (showPasswordError) {
                 Text(
                     text = "Password Required Fields",
-                    color = androidx.compose.ui.graphics.Color.Red,
+                    color = Color.Red,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(start = 4.dp, top = 4.dp)

@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial.screens
+package ar.edu.ort.parcial.screens.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -30,13 +30,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 
-
 @Composable
-fun ForgotNewPassword() {
+fun ForgotPassword() {
     var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
 
-    val isButtonEnabled = email.isNotBlank() && password.isNotBlank()
+    val isButtonEnabled = email.isNotBlank()
 
     Box(
         modifier = Modifier
@@ -73,12 +71,6 @@ fun ForgotNewPassword() {
                 value = email,
                 onValueChange = { email = it }
             )
-            Spacer(modifier = Modifier.height(18.dp))
-            FieldCom(
-                text = stringResource(id = R.string.field_pass),
-                value = password,
-                onValueChange = { password = it }
-            )
         }
         Column(
             modifier = Modifier
@@ -103,6 +95,7 @@ fun ForgotNewPassword() {
 
 @Preview()
 @Composable
-fun ForgotNewPasswordPreview() {
-    ForgotNewPassword()
+fun ForgotPasswordPreview() {
+    ForgotPassword()
 }
+

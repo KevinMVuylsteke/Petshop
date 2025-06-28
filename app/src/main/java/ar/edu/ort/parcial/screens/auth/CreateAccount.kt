@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial.screens
+package ar.edu.ort.parcial.screens.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
