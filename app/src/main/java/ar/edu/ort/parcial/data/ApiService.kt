@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial.data.api
+package ar.edu.ort.parcial.data
 
 import ar.edu.ort.parcial.data.models.*
 import retrofit2.Response

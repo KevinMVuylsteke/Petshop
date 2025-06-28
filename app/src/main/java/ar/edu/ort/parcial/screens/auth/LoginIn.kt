@@ -22,8 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ar.edu.ort.parcial.R
-import ar.edu.ort.parcial.ui.components.ButtonCom
-import ar.edu.ort.parcial.ui.components.ButtonIcon
+import ar.edu.ort.parcial.ui.components.button.ButtonCom
+import ar.edu.ort.parcial.ui.components.button.ButtonIcon
 import ar.edu.ort.parcial.ui.theme.Poppins
 import ar.edu.ort.parcial.ui.theme.White
 import ar.edu.ort.parcial.ui.theme.Gris

@@ -50,7 +50,7 @@ import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial.R
 import ar.edu.ort.parcial.navigation.NavRoutes
 import ar.edu.ort.parcial.navigation.NavRoutes.BESTSELLER
-import ar.edu.ort.parcial.ui.components.BottomNavBar
+import ar.edu.ort.parcial.ui.components.button.BottomNavBar
 
 @Composable
 fun HomeScreen(navController: NavHostController) {

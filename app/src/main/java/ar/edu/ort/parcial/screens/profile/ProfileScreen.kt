@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import ar.edu.ort.parcial.R
 import ar.edu.ort.parcial.navigation.NavRoutes.SELLER
 import ar.edu.ort.parcial.navigation.NavRoutes.BESTSELLER
-import ar.edu.ort.parcial.ui.components.BottomNavBar
+import ar.edu.ort.parcial.ui.components.button.BottomNavBar
 
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavController

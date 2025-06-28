@@ -2,7 +2,6 @@ package ar.edu.ort.parcial.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ar.edu.ort.parcial.data.api.RetrofitClient
 import ar.edu.ort.parcial.data.models.LoginRequest
 import ar.edu.ort.parcial.data.models.User
 import kotlinx.coroutines.flow.MutableStateFlow

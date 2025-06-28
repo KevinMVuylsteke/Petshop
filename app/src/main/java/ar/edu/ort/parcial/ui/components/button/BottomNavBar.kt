@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial.ui.components
+package ar.edu.ort.parcial.ui.components.button
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person

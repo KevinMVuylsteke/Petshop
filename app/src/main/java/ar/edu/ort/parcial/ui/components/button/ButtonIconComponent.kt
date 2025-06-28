@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial.ui.components
+package ar.edu.ort.parcial.ui.components.button
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
