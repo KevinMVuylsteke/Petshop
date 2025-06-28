@@ -4,14 +4,14 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import ar.edu.ort.parcial.screens.Onboarding
-import ar.edu.ort.parcial.screens.LoginIn
-import ar.edu.ort.parcial.screens.CreateAccount
-import ar.edu.ort.parcial.screens.HomeScreen
-import ar.edu.ort.parcial.screens.NotificationScreen
-import ar.edu.ort.parcial.screens.ProfileScreen
-import ar.edu.ort.parcial.screens.SellerScreen
-import ar.edu.ort.parcial.screens.BestSellerScreen
+import ar.edu.ort.parcial.screens.onboarding.Onboarding
+import ar.edu.ort.parcial.screens.auth.LoginIn
+import ar.edu.ort.parcial.screens.auth.CreateAccount
+import ar.edu.ort.parcial.screens.home.HomeScreen
+import ar.edu.ort.parcial.screens.notifications.NotificationScreen
+import ar.edu.ort.parcial.screens.profile.ProfileScreen
+import ar.edu.ort.parcial.screens.profile.SellerScreen
+import ar.edu.ort.parcial.screens.home.BestSellerScreen
 
 object NavRoutes {
     const val ONBOARDING = "onboarding"

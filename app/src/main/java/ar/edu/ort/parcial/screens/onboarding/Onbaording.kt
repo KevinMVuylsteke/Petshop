@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial.screens
+package ar.edu.ort.parcial.screens.onboarding
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

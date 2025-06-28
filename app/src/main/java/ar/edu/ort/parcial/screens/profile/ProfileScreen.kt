@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial.screens
+package ar.edu.ort.parcial.screens.profile
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
