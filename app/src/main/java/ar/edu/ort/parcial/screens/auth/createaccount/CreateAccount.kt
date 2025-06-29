@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial.screens.auth
+package ar.edu.ort.parcial.screens.auth.createaccount
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -25,22 +25,20 @@ import ar.edu.ort.parcial.ui.components.TextLink
 import ar.edu.ort.parcial.ui.theme.Gris
 import ar.edu.ort.parcial.ui.theme.Poppins
 import ar.edu.ort.parcial.ui.theme.White
-
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
-@Composable
-fun CreateAccount(navController: NavHostController) {
-    var name by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
 
-    val isButtonEnabled = name.isNotBlank() && email.isNotBlank() && password.isNotBlank()
+import androidx.lifecycle.viewmodel.compose.viewModel
+
+@Composable
+fun CreateAccount(
+    navController: NavHostController,
+    viewModel: CreateAccountViewModel = viewModel()
+) {
+    val state = viewModel.uiState
 
     Box(
         modifier = Modifier
@@ -57,41 +55,61 @@ fun CreateAccount(navController: NavHostController) {
                 text = stringResource(id = R.string.create_title),
                 fontFamily = Poppins,
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 40.sp,
-                lineHeight = 56.sp,
-                letterSpacing = 0.sp
+                fontSize = 40.sp
             )
+
             Spacer(modifier = Modifier.height(30.dp))
+
             Text(
                 text = stringResource(id = R.string.create_text),
                 fontFamily = Poppins,
                 fontWeight = FontWeight.SemiBold,
                 color = Gris,
-                fontSize = 14.sp,
-                lineHeight = 21.sp,
-                letterSpacing = 0.sp
+                fontSize = 14.sp
             )
+
             Spacer(modifier = Modifier.height(30.dp))
+
             FieldCom(
                 text = stringResource(id = R.string.field_name),
-                value = name,
-                onValueChange = { name = it }
+                value = state.name,
+                onValueChange = viewModel::onNameChange
             )
+
             Spacer(modifier = Modifier.height(18.dp))
+
             FieldCom(
                 text = stringResource(id = R.string.field_email),
-                value = email,
-                onValueChange = { email = it }
+                value = state.email,
+                onValueChange = viewModel::onEmailChange
             )
+
             Spacer(modifier = Modifier.height(18.dp))
+
             FieldCom(
                 text = stringResource(id = R.string.field_pass),
-                value = password,
-                onValueChange = { password = it }
+                value = state.password,
+                onValueChange = viewModel::onPasswordChange
             )
+
+            if (state.showPasswordError) {
+                Text(
+                    text = "Este campo es obligatorio",
+                    color = Color.Red,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(start = 4.dp, top = 2.dp)
+                )
+            }
+
             Spacer(modifier = Modifier.height(24.dp))
-            CheckTerms()
+
+            CheckTerms(
+                checked = state.acceptedTerms,
+                onCheckedChange = viewModel::onTermsChecked
+            )
         }
+
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -103,15 +121,18 @@ fun CreateAccount(navController: NavHostController) {
                 text2 = stringResource(id = R.string.create_textlink2),
                 onClickText2 = { navController.navigate("LoginIn") }
             )
+
             Spacer(modifier = Modifier.height(36.dp))
+
             ButtonCom(
                 text = stringResource(id = R.string.button_get),
-                enabled = isButtonEnabled,
-                onClick = {navController.navigate("LoginIn")}
+                enabled = state.isButtonEnabled,
+                onClick = { navController.navigate("LoginIn") }
             )
         }
     }
 }
+
 
 @Preview()
 @Composable

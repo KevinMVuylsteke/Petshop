@@ -29,10 +29,6 @@ import ar.edu.ort.parcial.ui.theme.White
 import ar.edu.ort.parcial.ui.theme.Gris
 import ar.edu.ort.parcial.ui.components.FieldCom
 import ar.edu.ort.parcial.ui.components.TextLink
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 
@@ -43,14 +39,8 @@ import androidx.navigation.compose.rememberNavController
 fun LoginIn(navController: NavHostController,
             authViewModel: LoginInViewModel = viewModel()
     ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var showPasswordError by remember { mutableStateOf(false) }
 
-    //val loginResponse by authViewModel.loginResponse.observeAsState()
-    //val loginError by authViewModel.loginError.observeAsState()
     val state = authViewModel.uiState
-    //val isButtonEnabled = email.isNotBlank() && password.isNotBlank()
 
     Box(
         modifier = Modifier
