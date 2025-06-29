@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial.screens.auth
+package ar.edu.ort.parcial.screens.auth.loginin
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,17 +34,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun LoginIn(navController: NavHostController) {
+fun LoginIn(navController: NavHostController,
+            authViewModel: LoginInViewModel = viewModel()
+    ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPasswordError by remember { mutableStateOf(false) }
 
-    val isButtonEnabled = email.isNotBlank() && password.isNotBlank()
+    //val loginResponse by authViewModel.loginResponse.observeAsState()
+    //val loginError by authViewModel.loginError.observeAsState()
+    val state = authViewModel.uiState
+    //val isButtonEnabled = email.isNotBlank() && password.isNotBlank()
 
     Box(
         modifier = Modifier
@@ -78,21 +84,16 @@ fun LoginIn(navController: NavHostController) {
             Spacer(modifier = Modifier.height(30.dp))
             FieldCom(
                 text = stringResource(id = R.string.field_email),
-                value = email,
-                onValueChange = { email = it }
+                value = state.email,
+                onValueChange = authViewModel::onEmailChange
             )
             Spacer(modifier = Modifier.height(18.dp))
             FieldCom(
                 text = stringResource(id = R.string.field_pass),
-                value = password,
-                onValueChange = {
-                    password = it
-                    if (it.isNotBlank()) {
-                        showPasswordError = false
-                    }
-                }
+                value = state.password,
+                onValueChange = authViewModel::onPasswordChange
             )
-            if (showPasswordError) {
+            if (state.showPasswordError) {
                 Text(
                     text = stringResource(id = R.string.field_pass_error),
                     color = Color.Red,
@@ -136,8 +137,12 @@ fun LoginIn(navController: NavHostController) {
             Spacer(modifier = Modifier.height(36.dp))
             ButtonCom(
                 text = stringResource(id = R.string.button_get),
-                enabled = isButtonEnabled,
-                onClick = {navController.navigate("Home")}
+                enabled = state.isButtonEnabled,
+                onClick = {
+                    if (authViewModel.validateCredentials()) {
+                        navController.navigate("Home")
+                    }
+                }
             )
         }
     }
