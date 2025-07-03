@@ -14,27 +14,25 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Checkbox
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import ar.edu.ort.parcial.ui.theme.Violet
 
 @Composable
-fun CheckTerms() {
-    var isChecked by remember { mutableStateOf(false) }
+fun CheckTerms(
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Checkbox(
-            checked = isChecked,
-            onCheckedChange = { isChecked = it }
+            checked = checked,
+            onCheckedChange = onCheckedChange
         )
         Spacer(modifier = Modifier.width(8.dp))
         TermsAndPrivacyText()
-        //Text(text = if (isChecked) "Seleccionado" else "No seleccionado")
     }
 }
+
 
 @Composable
 fun TermsAndPrivacyText() {

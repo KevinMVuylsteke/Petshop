@@ -1,7 +1,10 @@
 plugins {
+    id("kotlin-kapt")
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.hilt)
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -28,16 +31,19 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true
     }
-}
+    kapt {
+        correctErrorTypes = true
+    }
+
 
 dependencies {
 
@@ -55,6 +61,7 @@ dependencies {
 
     implementation("androidx.compose.material:material-icons-extended:1.6.7")
     implementation(libs.play.services.analytics.impl)
+    implementation(libs.support.annotations)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -66,6 +73,11 @@ dependencies {
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
     // Converter para JSON (ej. Gson)
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
@@ -76,7 +88,20 @@ dependencies {
     // Lifecycle KTX para ViewModelScope (si aún no lo tienes)
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation(libs.logging.interceptor)
+    implementation("com.google.dagger:hilt-android:2.56.2")
 
+    //hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
+    //firebase
+    implementation("com.google.firebase:firebase-config:21.6.3")
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("com.google.firebase:firebase-crashlytics:18.6.3")
+    implementation("com.google.firebase:firebase-firestore:24.11.0")
+    implementation("com.google.firebase:firebase-database:20.3.1")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
+}
 }

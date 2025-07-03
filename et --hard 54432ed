@@ -1,0 +1,32 @@
+[33m1907867[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m HEAD@{0}: pull origin develop: Fast-forward
+[33m54432ed[m HEAD@{1}: commit: view model createaccount
+[33mb55b6ce[m HEAD@{2}: commit (merge): fix: resolviendo merge pendiente
+[33m2762704[m HEAD@{3}: commit: viewmodel Login y validaciones
+[33mfd75420[m HEAD@{4}: commit: Estructura app
+[33m8b73f25[m HEAD@{5}: commit: estructuro screens
+[33m3bbe995[m HEAD@{6}: commit: readme
+[33m668d8b5[m HEAD@{7}: pull origin develop: Merge made by the 'ort' strategy.
+[33m58d77ae[m HEAD@{8}: commit: guardo cambios locales
+[33m08d6171[m HEAD@{9}: pull origin develop: Merge made by the 'ort' strategy.
+[33m02804bd[m HEAD@{10}: commit: guardo cambios previo pull
+[33mb751a77[m HEAD@{11}: pull origin develop: Merge made by the 'ort' strategy.
+[33me1ddbc6[m HEAD@{12}: commit: Avance en nuevos screens
+[33me0d6f2c[m HEAD@{13}: checkout: moving from develop to develop
+[33me0d6f2c[m HEAD@{14}: commit: pantalla onbaording y componente google
+[33m0d13bf9[m HEAD@{15}: checkout: moving from main to develop
+[33m86a0296[m[33m ([m[1;32mmain[m[33m)[m HEAD@{16}: checkout: moving from develop to main
+[33m0d13bf9[m HEAD@{17}: merge origin/main: Merge made by the 'ort' strategy.
+[33m71d654f[m HEAD@{18}: checkout: moving from develop to develop
+[33m71d654f[m HEAD@{19}: commit: rama de desarrollo
+[33m3e6860c[m HEAD@{20}: checkout: moving from develop to develop
+[33m3e6860c[m HEAD@{21}: checkout: moving from main to develop
+[33m86a0296[m[33m ([m[1;32mmain[m[33m)[m HEAD@{22}: commit: Eliminar archivos ignorados del repositorio
+[33mf3ea6da[m HEAD@{23}: pull origin main --allow-unrelated-histories: Merge made by the 'ort' strategy.
+[33m275e9cb[m HEAD@{24}: checkout: moving from develop to main
+[33m3e6860c[m HEAD@{25}: checkout: moving from main to develop
+[33m275e9cb[m HEAD@{26}: checkout: moving from main to main
+[33m275e9cb[m HEAD@{27}: commit: Guardando cambios antes de cambiar a main
+[33m109e81a[m HEAD@{28}: checkout: moving from develop to main
+[33m3e6860c[m HEAD@{29}: commit (merge): Merge branch 'main' of github.com:KevinMVuylsteke/Petshop into develop
+[33m109e81a[m HEAD@{30}: checkout: moving from main to develop
+[33m109e81a[m HEAD@{31}: commit (initial): Primer commit Petshop y .gitignore

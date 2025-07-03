@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "397768719743",
+    "project_id": "petshop-4f3f2",
+    "storage_bucket": "petshop-4f3f2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397768719743:android:c121a90b793ab3ad73ee4a",
+        "android_client_info": {
+          "package_name": "ar.edu.ort.parcial"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwyFnb_txraGQ6QwLsyiHG_r8izzSePh8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
