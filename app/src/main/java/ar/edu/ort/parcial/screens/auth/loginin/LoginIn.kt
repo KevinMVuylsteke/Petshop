@@ -30,17 +30,17 @@ import ar.edu.ort.parcial.ui.theme.Gris
 import ar.edu.ort.parcial.ui.components.FieldCom
 import ar.edu.ort.parcial.ui.components.TextLink
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun LoginIn(navController: NavHostController,
-            authViewModel: LoginInViewModel = viewModel()
+            viewModel: LoginInViewModel = hiltViewModel()
     ) {
 
-    val state = authViewModel.uiState
+    val state = viewModel.uiState
 
     Box(
         modifier = Modifier
@@ -75,15 +75,23 @@ fun LoginIn(navController: NavHostController,
             FieldCom(
                 text = stringResource(id = R.string.field_email),
                 value = state.email,
-                onValueChange = authViewModel::onEmailChange
+                onValueChange = viewModel::onEmailChange
             )
             Spacer(modifier = Modifier.height(18.dp))
             FieldCom(
                 text = stringResource(id = R.string.field_pass),
                 value = state.password,
-                onValueChange = authViewModel::onPasswordChange
+                onValueChange = viewModel::onPasswordChange
             )
             if (state.showPasswordError) {
+                Text(
+                    text = stringResource(id = R.string.field_pass_error),
+                    color = Color.Red,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(start = 4.dp, top = 4.dp)
+                )
+            }else if (state.showPasswordError) {
                 Text(
                     text = stringResource(id = R.string.field_pass_error),
                     color = Color.Red,
@@ -129,9 +137,14 @@ fun LoginIn(navController: NavHostController,
                 text = stringResource(id = R.string.button_get),
                 enabled = state.isButtonEnabled,
                 onClick = {
-                    if (authViewModel.validateCredentials()) {
-                        navController.navigate("Home")
+                    viewModel.login {
+                        navController.navigate("Home") {
+                            popUpTo("LoginIn") { inclusive = true }
+                        }
                     }
+                    //if (viewModel.validateCredentials()) {
+                    //    navController.navigate("Home")
+                    //}
                 }
             )
         }

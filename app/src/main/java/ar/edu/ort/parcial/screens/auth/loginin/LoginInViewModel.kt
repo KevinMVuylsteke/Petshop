@@ -4,8 +4,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import ar.edu.ort.parcial.model.LoginRequest
+import ar.edu.ort.parcial.model.UserApi
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginInViewModel : ViewModel() {
+
+@HiltViewModel
+class LoginInViewModel @Inject constructor(
+    private val userApi: UserApi
+) : ViewModel() {
+
 
     var uiState by mutableStateOf(LoginUiState())
         private set
@@ -38,6 +49,19 @@ class LoginInViewModel : ViewModel() {
         )
 
         return emailValid && passwordValid
+    }
+    fun login(onSuccess: () -> Unit) {
+        if (!validateCredentials()) return
+
+        viewModelScope.launch {
+            val response = userApi.login(LoginRequest(uiState.email, uiState.password))
+            if (response.isSuccessful) {
+                uiState = uiState.copy( showPasswordError = false)
+                onSuccess()
+            } else {
+                uiState = uiState.copy( showPasswordError = true)
+            }
+        }
     }
 
     fun clear() {

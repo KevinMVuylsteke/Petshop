@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import ar.edu.ort.parcial.model.UserApi
 import ar.edu.ort.parcial.ui.AppPetShop
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,11 +17,9 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
-
         enableEdgeToEdge()
         setContent {
-            //val viewModel by viewModels<>()
-            AppPetShop(viewModel)//viewModel)
+            AppPetShop(viewModel)
         }
     }
 }

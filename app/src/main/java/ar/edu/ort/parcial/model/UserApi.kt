@@ -11,4 +11,7 @@ class UserApi @Inject constructor(
     suspend fun register(request: RegisterRequest): Response<Unit> {
         return apiService.register(request)
     }
+    suspend fun login(request: LoginRequest): Response<Unit> {
+        return apiService.login(request)
+    }
 }

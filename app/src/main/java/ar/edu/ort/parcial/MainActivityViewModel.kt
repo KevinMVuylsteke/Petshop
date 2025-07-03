@@ -1,9 +1,6 @@
 package ar.edu.ort.parcial
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
-
 data class UiState (
     val userName: String
 )
