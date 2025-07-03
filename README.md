@@ -18,6 +18,8 @@ Tecnologías Utilizadas:
 - Jetpack Compose: Framework moderno para construir interfaces en Android de manera declarativa.
 - Retrofit: Cliente HTTP para consumir la API REST que gestiona autenticación, registro y 
 operaciones con usuarios.
+- Hilt: Framework de inyección de dependencias que facilita la gestión y provisión de componentes 
+y servicios dentro de la aplicación.
 - MVVM: Patrón arquitectónico utilizado para separar la lógica de negocio y la UI.
 - Material 3: Diseño visual moderno y adaptativo.
 
