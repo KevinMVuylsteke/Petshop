@@ -1,11 +1,22 @@
 package ar.edu.ort.parcial.screens.auth.createaccount
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import ar.edu.ort.parcial.model.RegisterRequest
+import ar.edu.ort.parcial.model.UserApi
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import kotlinx.coroutines.launch
 
-class CreateAccountViewModel : ViewModel() {
+@HiltViewModel
+class CreateAccountViewModel @Inject constructor(
+    private val userApi: UserApi
+) : ViewModel() {
+
 
     var uiState by mutableStateOf(CreateAccountUiState())
         private set
@@ -38,5 +49,18 @@ class CreateAccountViewModel : ViewModel() {
             showPasswordError = showPasswordError,
             triedToInput = true
         )
+    }
+
+    fun register(onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            userApi.register(
+                RegisterRequest(
+                    name = uiState.name,
+                    email = uiState.email,
+                    password = uiState.password
+                )
+            )
+            onSuccess()
+        }
     }
 }

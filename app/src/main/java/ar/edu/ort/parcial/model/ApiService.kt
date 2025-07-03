@@ -1,6 +1,8 @@
-package ar.edu.ort.parcial.data.api
+package ar.edu.ort.parcial.model
 
-import ar.edu.ort.parcial.data.models.*
+import ar.edu.ort.parcial.data.models.LoginRequest
+import ar.edu.ort.parcial.data.models.ProductListResponse
+import ar.edu.ort.parcial.data.models.User
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -8,8 +10,9 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ApiService {
+    @POST("users")//register
+    suspend fun register(@Body request: RegisterRequest): Response<Unit>
 
-    // 1. Auth (User Login)
     @POST("auth/login")
     suspend fun loginUser(@Body request: LoginRequest): Response<User>
 
@@ -18,10 +21,5 @@ interface ApiService {
     @GET("products")
     suspend fun getAllProducts(): Response<ProductListResponse>
 
-    @GET("carts/user/{userId}")
-    suspend fun getUserCarts(@Path("userId") userId: Int): Response<CartsByUserResponse>
 
-    // Si quieres ver un carrito específico por su ID (ej. el carrito con id=1)
-    @GET("carts/{cartId}")
-    suspend fun getSingleCart(@Path("cartId") cartId: Int): Response<Cart>
 }

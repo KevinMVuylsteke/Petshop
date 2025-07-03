@@ -30,4 +30,9 @@
     <string name="payment_title">Payment Method</string>
     <string name="payment_text">Add New Payment</string>
     <string name="payment_button">Save</string>
+
+
+    <string name="api_base_url">https://fakestoreapi.com/</string>
+
+
 </resources>

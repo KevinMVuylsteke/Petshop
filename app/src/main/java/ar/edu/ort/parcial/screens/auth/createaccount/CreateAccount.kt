@@ -26,18 +26,21 @@ import ar.edu.ort.parcial.ui.theme.Gris
 import ar.edu.ort.parcial.ui.theme.Poppins
 import ar.edu.ort.parcial.ui.theme.White
 import androidx.compose.ui.graphics.Color
+import androidx.hilt.navigation.compose.hiltViewModel
 
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
 
 import androidx.lifecycle.viewmodel.compose.viewModel
+import ar.edu.ort.parcial.model.UserApi
 
 @Composable
 fun CreateAccount(
     navController: NavHostController,
-    viewModel: CreateAccountViewModel = viewModel()
+    viewModel: CreateAccountViewModel = hiltViewModel()
 ) {
+
     val state = viewModel.uiState
 
     Box(
@@ -127,16 +130,22 @@ fun CreateAccount(
             ButtonCom(
                 text = stringResource(id = R.string.button_get),
                 enabled = state.isButtonEnabled,
-                onClick = { navController.navigate("LoginIn") }
+                onClick = {
+                    viewModel.register(
+                        onSuccess = {
+                            navController.navigate("LoginIn")
+                        }
+                    )
+                }
             )
         }
     }
 }
 
-
+/*
 @Preview()
 @Composable
 fun CreateAccountPreview() {
     val navController = rememberNavController()
     CreateAccount(navController = navController)
-}
+}*/
