@@ -23,6 +23,7 @@ import ar.edu.ort.parcial.ui.components.ProductCard
 import ar.edu.ort.parcial.ui.components.Product
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BestSellerScreen(navController: NavController) {
+fun BestSellerScreen(navController: NavHostController) {
     // Aquí es donde puedes definir tus productos reales.
     // Asegúrate de que R.drawable.comidaparagatos2 y R.drawable.fotocomidagatos
     // existan en tu carpeta `res/drawable`.
@@ -81,10 +82,12 @@ fun BestSellerScreen(navController: NavController) {
                 .padding(paddingValues)
         ) {
             items(products) { product ->
-                ProductCard(product = product) {
-                    // Aquí puedes manejar la lógica cuando se hace clic en "Agregar"
-                    println("Se agregó ${product.name} al carrito!")
-                }
+                ProductCard(
+                    product = product,
+                    onClick  = {
+                        navController.navigate("ProductDetailScreen")
+                    }
+                )
             }
         }
     }

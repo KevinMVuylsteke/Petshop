@@ -1,12 +1,12 @@
-package ar.edu.ort.parcial.model
+package ar.edu.ort.parcial.shared
 
 import ar.edu.ort.parcial.data.models.ProductListResponse
-import ar.edu.ort.parcial.data.models.User
+import ar.edu.ort.parcial.model.LoginRequest
+import ar.edu.ort.parcial.model.RegisterRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Path
 
 interface ApiService {
     @POST("users")

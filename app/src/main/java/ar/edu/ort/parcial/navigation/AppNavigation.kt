@@ -5,7 +5,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ar.edu.ort.parcial.MainActivityViewModel
-import ar.edu.ort.parcial.model.UserApi
 import ar.edu.ort.parcial.screens.onboarding.Onboarding
 import ar.edu.ort.parcial.screens.auth.loginin.LoginIn
 import ar.edu.ort.parcial.screens.auth.createaccount.CreateAccount
@@ -14,6 +13,7 @@ import ar.edu.ort.parcial.screens.notifications.NotificationScreen
 import ar.edu.ort.parcial.screens.profile.ProfileScreen
 import ar.edu.ort.parcial.screens.profile.SellerScreen
 import ar.edu.ort.parcial.screens.home.BestSellerScreen
+import ar.edu.ort.parcial.screens.home.productdetail.ProductDetailScreen
 
 object NavRoutes {
     const val ONBOARDING = "onboarding"
@@ -24,7 +24,7 @@ object NavRoutes {
     const val PROFILE = "Profile"
     const val SELLER = "Seller"
     const val BESTSELLER = "BestSeller"
-    const val PRODUCTDETAIL = "ProductDetail"
+    const val PRODUCTDETAIL = "ProductDetailScreen"
 }
 
 @Composable
@@ -55,7 +55,7 @@ fun AppNavigation(navController: NavHostController, viewModel: MainActivityViewM
             BestSellerScreen(navController)
         }
         composable(NavRoutes.PRODUCTDETAIL) {
-            SellerScreen(navController)
+            ProductDetailScreen(navController)
         }
     }
 }

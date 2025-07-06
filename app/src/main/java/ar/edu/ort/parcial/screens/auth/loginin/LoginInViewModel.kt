@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.ort.parcial.model.LoginRequest
-import ar.edu.ort.parcial.model.UserApi
+import ar.edu.ort.parcial.shared.UserApi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

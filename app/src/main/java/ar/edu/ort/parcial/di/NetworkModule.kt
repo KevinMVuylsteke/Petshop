@@ -1,7 +1,7 @@
 package ar.edu.ort.parcial.di
 
 import ar.edu.ort.parcial.core.Config
-import ar.edu.ort.parcial.model.ApiService
+import ar.edu.ort.parcial.shared.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,7 +1,7 @@
+package ar.edu.ort.parcial.shared
 
-package ar.edu.ort.parcial.model
-
-
+import ar.edu.ort.parcial.model.LoginRequest
+import ar.edu.ort.parcial.model.RegisterRequest
 import retrofit2.Response
 import javax.inject.Inject
 

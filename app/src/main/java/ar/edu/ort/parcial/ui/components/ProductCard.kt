@@ -20,9 +20,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 @Composable
-fun ProductCard(product: Product, onAddClick: () -> Unit = {}) {
+fun ProductCard(product: Product,  onClick: () -> Unit = {}) {
 
     Card(
         shape = RoundedCornerShape(16.dp),
@@ -51,7 +52,7 @@ fun ProductCard(product: Product, onAddClick: () -> Unit = {}) {
             Text("$${product.price}", fontWeight = FontWeight.Bold, fontSize = 16.sp)
             Spacer(modifier = Modifier.height(8.dp)) // Espacio entre precio y botón
             IconButton(
-                onClick = onAddClick,
+                onClick = onClick,
                 modifier = Modifier
                     .background(Color(0xFF8C52FF), shape = CircleShape)
                     .size(32.dp)

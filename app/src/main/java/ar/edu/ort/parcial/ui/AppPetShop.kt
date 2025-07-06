@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial.MainActivityViewModel
-import ar.edu.ort.parcial.model.UserApi
+import ar.edu.ort.parcial.shared.UserApi
 import ar.edu.ort.parcial.navigation.AppNavigation
 import ar.edu.ort.parcial.ui.theme.ParcialTheme
 
