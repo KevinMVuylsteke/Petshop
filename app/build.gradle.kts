@@ -106,6 +106,10 @@ dependencies {
     implementation("com.google.firebase:firebase-database:20.3.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
 
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+
+
     val room_version = "2.7.2"
     implementation("androidx.room:room-runtime:$room_version")
     // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)

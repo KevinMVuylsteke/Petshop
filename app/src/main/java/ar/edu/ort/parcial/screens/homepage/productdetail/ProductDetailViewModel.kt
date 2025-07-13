@@ -1,13 +1,10 @@
-package ar.edu.ort.parcial.screens.home.productdetail
+package ar.edu.ort.parcial.screens.homepage.productdetail
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import ar.edu.ort.parcial.data.local.FavoriteDao
 import ar.edu.ort.parcial.data.local.FavoriteIdEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

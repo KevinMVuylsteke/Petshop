@@ -8,12 +8,12 @@ import ar.edu.ort.parcial.MainActivityViewModel
 import ar.edu.ort.parcial.screens.onboarding.Onboarding
 import ar.edu.ort.parcial.screens.auth.loginin.LoginIn
 import ar.edu.ort.parcial.screens.auth.createaccount.CreateAccount
-import ar.edu.ort.parcial.screens.home.HomeScreen
+import ar.edu.ort.parcial.screens.homepage.home.HomeScreen
 import ar.edu.ort.parcial.screens.notifications.NotificationScreen
 import ar.edu.ort.parcial.screens.profile.ProfileScreen
 import ar.edu.ort.parcial.screens.profile.SellerScreen
-import ar.edu.ort.parcial.screens.home.BestSellerScreen
-import ar.edu.ort.parcial.screens.home.productdetail.ProductDetailScreen
+import ar.edu.ort.parcial.screens.homepage.BestSellerScreen
+import ar.edu.ort.parcial.screens.homepage.productdetail.ProductDetailScreen
 
 object NavRoutes {
     const val ONBOARDING = "onboarding"

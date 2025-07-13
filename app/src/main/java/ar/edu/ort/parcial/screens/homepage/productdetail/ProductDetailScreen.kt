@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial.screens.home.productdetail
+package ar.edu.ort.parcial.screens.homepage.productdetail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,7 +27,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavHostController
-import ar.edu.ort.parcial.ui.components.ProductCard
+import coil.compose.AsyncImage
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,8 +41,8 @@ fun ProductDetailScreen(
         name = "Royal Canin Adult",
         description = "The Persian cat has the longest and densest coat of all cat breeds. This means that it typically needs to consume more skin-health focused nutrients than other cat breeds. That's why ROYAL CANIN® Persian Adult contains an exclusive complex of nutrients to help the skin’s barrier defence role to maintain good skin and coat health.",
         price = "12,99",
-        imageRes = R.drawable.fotocomidagatos
-    )
+        imageUrl="https://drive.google.com/uc?export=view&id=1aNDUkow8QCLS2Qhvc-nSgveZbIqKBYDt"
+        )
 
     var isFavorite by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
@@ -110,8 +111,8 @@ fun ProductDetailScreen(
                         .padding(14.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Image(
-                        painter = painterResource(id = product.imageRes),
+                    AsyncImage(
+                        model = product.imageUrl,
                         contentDescription = product.name,
                         modifier = Modifier
                             .fillMaxSize(0.9f)
@@ -120,8 +121,8 @@ fun ProductDetailScreen(
                         contentScale = ContentScale.Fit
                     )
 
-                    Image(
-                        painter = painterResource(id = product.imageRes),
+                    AsyncImage(
+                        model = product.imageUrl,
                         contentDescription = product.name,
                         modifier = Modifier
                             .fillMaxSize(0.8f)
@@ -212,7 +213,8 @@ data class ProductDetail(
     val name: String,
     val description: String,
     val price: String,
-    val imageRes: Int
+    //val imageRes: Int
+    val imageUrl:String
 )
 
 @Preview(showBackground = true)

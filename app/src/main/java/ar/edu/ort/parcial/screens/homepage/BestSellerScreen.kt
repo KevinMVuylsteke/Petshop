@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial.screens.home
+package ar.edu.ort.parcial.screens.homepage
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -22,7 +22,6 @@ import ar.edu.ort.parcial.R
 import ar.edu.ort.parcial.ui.components.ProductCard
 import ar.edu.ort.parcial.ui.components.Product
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 
 class MainActivity : ComponentActivity() {

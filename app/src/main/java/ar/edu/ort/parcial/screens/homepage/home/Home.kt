@@ -1,5 +1,6 @@
-package ar.edu.ort.parcial.screens.home
+package ar.edu.ort.parcial.screens.homepage.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,6 +36,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,6 +47,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -53,7 +57,9 @@ import ar.edu.ort.parcial.navigation.NavRoutes.BESTSELLER
 import ar.edu.ort.parcial.ui.components.BottomNavBar
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(navController: NavHostController,viewModel: CategoryViewModel = hiltViewModel()
+) {
+    val categories = viewModel.categories
     Scaffold(
         topBar = { TopBar(navController) },
         bottomBar = { BottomNavBar(navController) }
@@ -61,7 +67,7 @@ fun HomeScreen(navController: NavHostController) {
         Column(modifier = Modifier.padding(padding)) {
             LocationSection()
             PromoSection()
-            CategorySection()
+            CategorySection(categories)
             BestSellerSection(navController)
         }
     }
@@ -183,7 +189,46 @@ fun PromoSection() {
     }
 }
 
+@Composable
+fun CategorySection(categories: List<Category>
+    //viewModel: CategoryViewModel = hiltViewModel()
+) {
+    //val categories = viewModel.categories
+    val (selectedCategoryId, setSelectedCategoryId) = remember { mutableStateOf<String?>(null) }
 
+    Log.d("CategorySection", "Cantidad de categorías: ${categories.size}")
+
+    Column(modifier = Modifier.padding(16.dp)) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Category", fontWeight = FontWeight.Bold)
+            Text("View All", color = Color.Gray)
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+
+        LazyRow {
+            items(categories) { category ->
+                val isSelected = category.id == selectedCategoryId
+                Button(
+                    onClick = { setSelectedCategoryId(category.id) },
+                    shape = RoundedCornerShape(20.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (isSelected) Color(0xFF7A50E3) else Color.LightGray,
+                        contentColor = if (isSelected) Color.White else Color.Black
+                    ),
+                    modifier = Modifier.padding(end = 8.dp)
+                ) {
+                    Text(category.name)
+                }
+            }
+        }
+    }
+}
+
+
+/*
 @Composable
 fun CategorySection() {
     Column(modifier = Modifier.padding(16.dp)) {
@@ -214,7 +259,7 @@ fun CategorySection() {
         }
     }
 }
-
+*/
 @Composable
 fun BestSellerSection(navController: NavHostController) {
     Column(modifier = Modifier.padding(16.dp)) {
