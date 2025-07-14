@@ -21,9 +21,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
+import ar.edu.ort.parcial.model.Product
 
 @Composable
-fun ProductCard(product: Product,  onClick: () -> Unit = {}) {
+fun ProductCard(
+    product: Product,
+    navController: NavHostController,
+    onClick: () -> Unit = {}
+) {
 
     Card(
         shape = RoundedCornerShape(16.dp),
@@ -39,7 +45,7 @@ fun ProductCard(product: Product,  onClick: () -> Unit = {}) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(id = product.imageRes),
+                painter = rememberAsyncImagePainter(model = product.imageUrl),
                 contentDescription = product.name,
                 modifier = Modifier
                     .size(100.dp)
@@ -52,7 +58,10 @@ fun ProductCard(product: Product,  onClick: () -> Unit = {}) {
             Text("$${product.price}", fontWeight = FontWeight.Bold, fontSize = 16.sp)
             Spacer(modifier = Modifier.height(8.dp)) // Espacio entre precio y botón
             IconButton(
-                onClick = onClick,
+                //onClick = onClick,
+                onClick = {
+                    navController.navigate("ProductDetailScreen/${product.category}/${product.id}")
+                },
                 modifier = Modifier
                     .background(Color(0xFF8C52FF), shape = CircleShape)
                     .size(32.dp)
@@ -63,8 +72,3 @@ fun ProductCard(product: Product,  onClick: () -> Unit = {}) {
     }
 }
 
-data class Product(
-    val name: String,
-    val price: String,
-    val imageRes: Int
-)

@@ -227,39 +227,6 @@ fun CategorySection(categories: List<Category>
     }
 }
 
-
-/*
-@Composable
-fun CategorySection() {
-    Column(modifier = Modifier.padding(16.dp)) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Category", fontWeight = FontWeight.Bold)
-            Text("View All", color = Color.Gray)
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Row {
-            val categories = listOf("Food", "Toys", "Accessories")
-            categories.forEach { category ->
-                Button(
-                    onClick = { /*TODO*/ },
-                    shape = RoundedCornerShape(20.dp),
-
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = if (category == "Food") Color(0xFF7A50E3) else Color.LightGray,
-                        contentColor = Color.White
-                    ),
-                    modifier = Modifier.padding(end = 8.dp)
-                ) {
-                    Text(category)
-                }
-            }
-        }
-    }
-}
-*/
 @Composable
 fun BestSellerSection(navController: NavHostController) {
     Column(modifier = Modifier.padding(16.dp)) {

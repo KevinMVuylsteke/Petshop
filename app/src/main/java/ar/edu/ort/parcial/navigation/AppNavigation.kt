@@ -12,7 +12,7 @@ import ar.edu.ort.parcial.screens.homepage.home.HomeScreen
 import ar.edu.ort.parcial.screens.notifications.NotificationScreen
 import ar.edu.ort.parcial.screens.profile.ProfileScreen
 import ar.edu.ort.parcial.screens.profile.SellerScreen
-import ar.edu.ort.parcial.screens.homepage.BestSellerScreen
+import ar.edu.ort.parcial.screens.homepage.bestseller.BestSellerScreen
 import ar.edu.ort.parcial.screens.homepage.productdetail.ProductDetailScreen
 
 object NavRoutes {
@@ -54,8 +54,14 @@ fun AppNavigation(navController: NavHostController, viewModel: MainActivityViewM
         composable(NavRoutes.BESTSELLER) {
             BestSellerScreen(navController)
         }
-        composable(NavRoutes.PRODUCTDETAIL) {
-            ProductDetailScreen(navController)
+        //composable(NavRoutes.PRODUCTDETAIL) {
+        //    ProductDetailScreen(navController)
+        //}
+        composable("${NavRoutes.PRODUCTDETAIL}/{category}/{productId}") { backStackEntry ->
+            val category = backStackEntry.arguments?.getString("category") ?: ""
+            val productId = backStackEntry.arguments?.getString("productId") ?: ""
+            ProductDetailScreen(navController, category, productId)
         }
+
     }
 }

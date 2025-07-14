@@ -1,6 +1,6 @@
 package ar.edu.ort.parcial.screens.homepage.productdetail
 
-import androidx.compose.foundation.Image
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,43 +16,60 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ar.edu.ort.parcial.R
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductDetailScreen(
     navController: NavHostController,
-     viewModel: ProductDetailViewModel = hiltViewModel()
+    category: String,
+    productId: String,
+    viewModel: ProductDetailViewModel = hiltViewModel()
 ) {
-    val product = ProductDetail(
-        id = "prod_rc_adult",
-        name = "Royal Canin Adult",
-        description = "The Persian cat has the longest and densest coat of all cat breeds. This means that it typically needs to consume more skin-health focused nutrients than other cat breeds. That's why ROYAL CANIN® Persian Adult contains an exclusive complex of nutrients to help the skin’s barrier defence role to maintain good skin and coat health.",
-        price = "12,99",
-        imageUrl="https://drive.google.com/uc?export=view&id=1aNDUkow8QCLS2Qhvc-nSgveZbIqKBYDt"
-        )
+
+    Log.d("ProductDetailScreen", "ProductDetailScreen productId: $productId")
+    val productState by viewModel.product.collectAsState() // Renombrar para claridad
+    val currentProduct = productState
+    //val product by viewModel.product.collectAsState()
 
     var isFavorite by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     var quantity by remember { mutableStateOf(1) }
 
-
-    LaunchedEffect(product.id) {
-        isFavorite = viewModel.isFavorite(product.id)
+    LaunchedEffect(Unit) {
+        Log.d("launched ProductDetailScreen", "ProductDetailScreen launched productId recibido: ${productId}")
+        viewModel.loadProduct(category, productId)
     }
+
+
+    if (currentProduct == null) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+        return
+    }
+
+
+    LaunchedEffect(currentProduct?.id) {
+        currentProduct?.let {
+            isFavorite = viewModel.isFavorite(it.id)
+            Log.d("FavoriteCheck", "Producto favorito: $isFavorite")
+        }
+    }
+
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -74,8 +91,8 @@ fun ProductDetailScreen(
                     IconButton(onClick = {
 
                         scope.launch {
-                            viewModel.toggleFavorite(product.id)
-                            isFavorite = viewModel.isFavorite(product.id)
+                            viewModel.toggleFavorite(currentProduct.id)
+                            isFavorite = viewModel.isFavorite(currentProduct.id)
                         }
                     }) {
                         Icon(
@@ -112,8 +129,8 @@ fun ProductDetailScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     AsyncImage(
-                        model = product.imageUrl,
-                        contentDescription = product.name,
+                        model = currentProduct.imageUrl,
+                        contentDescription = currentProduct.name,
                         modifier = Modifier
                             .fillMaxSize(0.9f)
                             .align(Alignment.Center)
@@ -122,8 +139,8 @@ fun ProductDetailScreen(
                     )
 
                     AsyncImage(
-                        model = product.imageUrl,
-                        contentDescription = product.name,
+                        model = currentProduct.imageUrl,
+                        contentDescription = currentProduct.name,
                         modifier = Modifier
                             .fillMaxSize(0.8f)
                             .align(Alignment.Center)
@@ -134,7 +151,7 @@ fun ProductDetailScreen(
             }
 
             Text(
-                text = product.name,
+                text = currentProduct.fullname,
                 fontWeight = FontWeight.Bold,
                 fontSize = 22.sp,
                 color = Color.Black,
@@ -142,7 +159,7 @@ fun ProductDetailScreen(
             )
 
             Text(
-                text = product.description,
+                text = currentProduct.description,
                 fontSize = 14.sp,
                 color = Color.Gray,
                 lineHeight = 20.sp,
@@ -186,7 +203,7 @@ fun ProductDetailScreen(
                 }
 
                 Text(
-                    text = "$${product.price}",
+                    text = "$${currentProduct.price}",
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
                     color = Color.Black
@@ -208,20 +225,13 @@ fun ProductDetailScreen(
     }
 }
 
-data class ProductDetail(
-    val id: String,
-    val name: String,
-    val description: String,
-    val price: String,
-    //val imageRes: Int
-    val imageUrl:String
-)
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun PreviewProductDetailScreen() {
     val navController = rememberNavController()
     MaterialTheme {
-        ProductDetailScreen(navController = navController)
+        ProductDetailScreen(navController = navController, category = category)
     }
 }
+*/
