@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import androidx.navigation.NavHostController
+import ar.edu.ort.parcial.R
 import coil.compose.AsyncImage
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,8 +40,6 @@ fun ProductDetailScreen(
     Log.d("ProductDetailScreen", "ProductDetailScreen productId: $productId")
     val productState by viewModel.product.collectAsState() // Renombrar para claridad
     val currentProduct = productState
-    //val product by viewModel.product.collectAsState()
-
     var isFavorite by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -49,8 +49,6 @@ fun ProductDetailScreen(
         Log.d("launched ProductDetailScreen", "ProductDetailScreen launched productId recibido: ${productId}")
         viewModel.loadProduct(category, productId)
     }
-
-
     if (currentProduct == null) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -60,22 +58,18 @@ fun ProductDetailScreen(
         }
         return
     }
-
-
     LaunchedEffect(currentProduct?.id) {
         currentProduct?.let {
             isFavorite = viewModel.isFavorite(it.id)
             Log.d("FavoriteCheck", "Producto favorito: $isFavorite")
         }
     }
-
-
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        "Product Detail",
+                        text = stringResource(id = R.string.product_detail_title),
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Bold,
@@ -89,7 +83,6 @@ fun ProductDetailScreen(
                 },
                 actions = {
                     IconButton(onClick = {
-
                         scope.launch {
                             viewModel.toggleFavorite(currentProduct.id)
                             isFavorite = viewModel.isFavorite(currentProduct.id)

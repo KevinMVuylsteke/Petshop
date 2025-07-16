@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,12 +39,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,9 +57,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial.R
+import ar.edu.ort.parcial.data.models.Product
 import ar.edu.ort.parcial.navigation.NavRoutes
 import ar.edu.ort.parcial.navigation.NavRoutes.BESTSELLER
 import ar.edu.ort.parcial.ui.components.BottomNavBar
+import ar.edu.ort.parcial.ui.components.ProductCard
+import androidx.compose.runtime.getValue
+import androidx.compose.foundation.lazy.grid.items
 
 @Composable
 fun HomeScreen(navController: NavHostController,viewModel: CategoryViewModel = hiltViewModel()
@@ -84,8 +93,6 @@ fun TopBar(navController: NavController) {
                 horizontalArrangement = Arrangement.End,
                 modifier = Modifier.padding(end = 8.dp)
             ) {
-
-
                 Box(
                     modifier = Modifier
                         .size(36.dp)
@@ -96,10 +103,7 @@ fun TopBar(navController: NavController) {
                         Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.Black)
                     }
                 }
-
                 Spacer(modifier = Modifier.width(8.dp))
-
-
                 Box(
                     modifier = Modifier
                         .size(36.dp)
@@ -122,10 +126,9 @@ fun TopBar(navController: NavController) {
 fun LocationSection() {
     Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 8.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Location", color = Color.Gray, fontSize = 12.sp)
-
+            Text(text = stringResource(id = R.string.home_loc), color = Color.Gray, fontSize = 12.sp)
         }
-        Text("Jebres, Surakarta", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+        Text(text = stringResource(id = R.string.home_ubi), fontSize = 18.sp, fontWeight = FontWeight.Bold)
     }
 }
 
@@ -226,7 +229,7 @@ fun CategorySection(categories: List<Category>
         }
     }
 }
-
+/*
 @Composable
 fun BestSellerSection(navController: NavHostController) {
     Column(modifier = Modifier.padding(16.dp)) {
@@ -258,7 +261,69 @@ fun BestSellerSection(navController: NavHostController) {
         }
     }
 }
+*/
 
+@Composable
+fun BestSellerSection(
+    navController: NavHostController,
+    viewModel: BestSellerSelectionViewModel = hiltViewModel()
+) {
+    val products by viewModel.products.collectAsState()
+
+    Column(modifier = Modifier.padding(16.dp)) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = "Best Seller",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "View All",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+                color = Color(0xFF7140FD),
+                modifier = Modifier.clickable {
+                    navController.navigate(BESTSELLER)
+                }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        if (products.isNotEmpty()) {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(0.dp)
+            ) {
+                items(products.take(2)) { product ->
+                    ProductCard(
+                        product = product,
+                        navController = navController,
+                        onClick = {
+                            navController.navigate("ProductDetailScreen/${product.category}/${product.id}")
+                            Log.d("HomeScreen", "Best Seller item clicked: ${product.id}")
+                        }
+                    )
+                }
+            }
+        } else {
+            Text(
+                text = "Cargando productos...",
+                modifier = Modifier.padding(8.dp),
+                fontSize = 14.sp,
+                color = Color.Gray
+            )
+        }
+    }
+}
+
+/*
 @Composable
 fun ProductItem(name: String, price: String) {
     Card(
@@ -284,7 +349,7 @@ fun ProductItem(name: String, price: String) {
         }
     }
 }
-
+*/
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {

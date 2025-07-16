@@ -31,6 +31,12 @@
     <string name="payment_text">Add New Payment</string>
     <string name="payment_button">Save</string>
 
+    <string name="home_loc">Best Seller</string>
+    <string name="home_ubi">Jebres, Surakarta</string>
+    <string name="best_seller_title">Best Seller</string>
+
+
+    <string name="product_detail_title">Product Detail</string>
 
     <string name="api_base_url">https://fakestoreapi.com/</string>
 
