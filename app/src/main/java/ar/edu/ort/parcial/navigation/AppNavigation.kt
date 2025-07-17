@@ -14,6 +14,7 @@ import ar.edu.ort.parcial.screens.profile.ProfileScreen
 import ar.edu.ort.parcial.screens.profile.SellerScreen
 import ar.edu.ort.parcial.screens.homepage.bestseller.BestSellerScreen
 import ar.edu.ort.parcial.screens.homepage.productdetail.ProductDetailScreen
+import ar.edu.ort.parcial.screens.homepage.search.Search
 
 object NavRoutes {
     const val ONBOARDING = "onboarding"
@@ -25,6 +26,7 @@ object NavRoutes {
     const val SELLER = "Seller"
     const val BESTSELLER = "BestSeller"
     const val PRODUCTDETAIL = "ProductDetailScreen"
+    const val SEARCH = "SearchScreen"
 }
 
 @Composable
@@ -61,6 +63,9 @@ fun AppNavigation(navController: NavHostController, viewModel: MainActivityViewM
             val category = backStackEntry.arguments?.getString("category") ?: ""
             val productId = backStackEntry.arguments?.getString("productId") ?: ""
             ProductDetailScreen(navController, category, productId)
+        }
+        composable(NavRoutes.SEARCH) {
+            Search(navController)
         }
 
     }

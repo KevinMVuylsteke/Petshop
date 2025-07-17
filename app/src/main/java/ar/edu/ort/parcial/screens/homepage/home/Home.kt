@@ -24,7 +24,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
@@ -47,7 +46,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -57,7 +55,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ar.edu.ort.parcial.R
-import ar.edu.ort.parcial.data.models.Product
 import ar.edu.ort.parcial.navigation.NavRoutes
 import ar.edu.ort.parcial.navigation.NavRoutes.BESTSELLER
 import ar.edu.ort.parcial.ui.components.BottomNavBar
@@ -99,7 +96,7 @@ fun TopBar(navController: NavController) {
                         .background(Color.LightGray.copy(alpha = 0.3f), CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    IconButton(onClick = { /* TODO: Search */ }) {
+                    IconButton(onClick = { navController.navigate(NavRoutes.SEARCH) }) {
                         Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.Black)
                     }
                 }
@@ -194,9 +191,7 @@ fun PromoSection() {
 
 @Composable
 fun CategorySection(categories: List<Category>
-    //viewModel: CategoryViewModel = hiltViewModel()
 ) {
-    //val categories = viewModel.categories
     val (selectedCategoryId, setSelectedCategoryId) = remember { mutableStateOf<String?>(null) }
 
     Log.d("CategorySection", "Cantidad de categorías: ${categories.size}")
@@ -229,39 +224,6 @@ fun CategorySection(categories: List<Category>
         }
     }
 }
-/*
-@Composable
-fun BestSellerSection(navController: NavHostController) {
-    Column(modifier = Modifier.padding(16.dp)) {
-        Row(horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text( text = "Best Seller",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                lineHeight = 29.sp, // 180% of 16px = 28.8px ≈ 29.sp
-                letterSpacing = 0.sp,
-                fontFamily = FontFamily.Default )
-            Text(
-                text = "View All",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
-                lineHeight = 19.sp,
-                letterSpacing = 0.sp,
-                color = Color(0xFF7140FD),
-                fontFamily = FontFamily.Default,
-                modifier = Modifier.clickable { navController.navigate(BESTSELLER) }
-            )
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        LazyRow {
-            items(listOf("RC Kitten" to "$20.99", "RC Persian" to "$22.99")) { (name, price) ->
-                ProductItem(name, price)
-            }
-        }
-    }
-}
-*/
 
 @Composable
 fun BestSellerSection(
@@ -323,33 +285,6 @@ fun BestSellerSection(
     }
 }
 
-/*
-@Composable
-fun ProductItem(name: String, price: String) {
-    Card(
-        shape = RoundedCornerShape(16.dp),
-        modifier = Modifier
-            .padding(end = 16.dp)
-            .width(160.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.fotocomidaperros),
-                contentDescription = "Product",
-                modifier = Modifier.height(100.dp)
-            )
-            Text(name, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-            Text(price, fontSize = 12.sp)
-            IconButton(onClick = { /*TODO: Add to cart*/ }) {
-                Icon(Icons.Default.Add, contentDescription = "Add")
-            }
-        }
-    }
-}
-*/
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {

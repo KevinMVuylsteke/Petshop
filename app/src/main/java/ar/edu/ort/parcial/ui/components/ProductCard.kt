@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,9 +47,7 @@ fun ProductCard(
                 painter = rememberAsyncImagePainter(model = product.imageUrl),
                 contentDescription = product.name,
                 modifier = Modifier
-                    .size(100.dp)
-                // .padding(top = 8.dp), // Puedes quitar este padding si no lo necesitas con Arrangement.Center
-                ,
+                    .size(100.dp),
                 contentScale = ContentScale.Fit
             )
             Spacer(modifier = Modifier.height(4.dp)) // Espacio entre imagen y texto
@@ -58,7 +55,6 @@ fun ProductCard(
             Text("$${product.price}", fontWeight = FontWeight.Bold, fontSize = 16.sp)
             Spacer(modifier = Modifier.height(8.dp)) // Espacio entre precio y botón
             IconButton(
-                //onClick = onClick,
                 onClick = {
                     navController.navigate("ProductDetailScreen/${product.category}/${product.id}")
                 },

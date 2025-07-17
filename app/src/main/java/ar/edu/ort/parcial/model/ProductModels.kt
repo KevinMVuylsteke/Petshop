@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial.data.models
+package ar.edu.ort.parcial.models
 
 data class Product(
     val id: Int,
