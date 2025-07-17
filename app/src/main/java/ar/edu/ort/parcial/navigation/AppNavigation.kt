@@ -4,16 +4,18 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import ar.edu.ort.parcial.MainActivityViewModel
-import ar.edu.ort.parcial.model.UserApi
+import ar.edu.ort.parcial.ui.viewmodel.MainActivityViewModel
 import ar.edu.ort.parcial.screens.onboarding.Onboarding
 import ar.edu.ort.parcial.screens.auth.loginin.LoginIn
 import ar.edu.ort.parcial.screens.auth.createaccount.CreateAccount
-import ar.edu.ort.parcial.screens.home.HomeScreen
+import ar.edu.ort.parcial.screens.homepage.home.HomeScreen
 import ar.edu.ort.parcial.screens.notifications.NotificationScreen
 import ar.edu.ort.parcial.screens.profile.ProfileScreen
 import ar.edu.ort.parcial.screens.profile.SellerScreen
-import ar.edu.ort.parcial.screens.home.BestSellerScreen
+import ar.edu.ort.parcial.screens.homepage.bestseller.BestSellerScreen
+import ar.edu.ort.parcial.screens.homepage.cart.Cart
+import ar.edu.ort.parcial.screens.homepage.productdetail.ProductDetailScreen
+import ar.edu.ort.parcial.screens.homepage.search.Search
 
 object NavRoutes {
     const val ONBOARDING = "onboarding"
@@ -24,7 +26,9 @@ object NavRoutes {
     const val PROFILE = "Profile"
     const val SELLER = "Seller"
     const val BESTSELLER = "BestSeller"
-    const val PRODUCTDETAIL = "ProductDetail"
+    const val PRODUCTDETAIL = "ProductDetailScreen"
+    const val SEARCH = "SearchScreen"
+    const val CART = "Cart"
 }
 
 @Composable
@@ -54,8 +58,19 @@ fun AppNavigation(navController: NavHostController, viewModel: MainActivityViewM
         composable(NavRoutes.BESTSELLER) {
             BestSellerScreen(navController)
         }
-        composable(NavRoutes.PRODUCTDETAIL) {
-            SellerScreen(navController)
+        //composable(NavRoutes.PRODUCTDETAIL) {
+        //    ProductDetailScreen(navController)
+        //}
+        composable("${NavRoutes.PRODUCTDETAIL}/{category}/{productId}") { backStackEntry ->
+            val category = backStackEntry.arguments?.getString("category") ?: ""
+            val productId = backStackEntry.arguments?.getString("productId") ?: ""
+            ProductDetailScreen(navController, category, productId)
+        }
+        composable(NavRoutes.SEARCH) {
+            Search(navController)
+        }
+        composable(NavRoutes.CART) {
+            Cart(navController)
         }
     }
 }

@@ -1,21 +1,26 @@
 package ar.edu.ort.parcial.screens.auth.createaccount
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.ort.parcial.model.RegisterRequest
-import ar.edu.ort.parcial.model.UserApi
+import ar.edu.ort.parcial.data.remote.api.UserApi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 @HiltViewModel
 class CreateAccountViewModel @Inject constructor(
-    private val userApi: UserApi
+    //private val userApi: UserApi
 ) : ViewModel() {
 
+    private val auth: FirebaseAuth = Firebase.auth
 
     var uiState by mutableStateOf(CreateAccountUiState())
         private set
@@ -50,6 +55,7 @@ class CreateAccountViewModel @Inject constructor(
         )
     }
 
+    /*
     fun register(onSuccess: () -> Unit) {
         viewModelScope.launch {
             userApi.register(
@@ -62,4 +68,45 @@ class CreateAccountViewModel @Inject constructor(
             onSuccess()
         }
     }
+    */
+    fun register(onSuccess: () -> Unit) {
+        val email = uiState.email.trim()
+        val password = uiState.password
+
+        if (email.isBlank() || password.isBlank()) {
+            uiState = uiState.copy(errorMessage = "Email y contraseña son obligatorios")
+            return
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            uiState = uiState.copy(errorMessage = "El email no tiene un formato válido")
+            return
+        }
+
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    val profileUpdates = user?.updateProfile(
+                        com.google.firebase.auth.UserProfileChangeRequest.Builder()
+                            .setDisplayName(uiState.name)
+                            .build()
+                    )
+                    profileUpdates?.addOnCompleteListener {
+                        uiState = uiState.copy(errorMessage = null)
+                        onSuccess()
+                    } ?: run {
+                        uiState = uiState.copy(errorMessage = null)
+                        onSuccess()
+                    }
+                } else {
+                    val errorMsg = task.exception?.message ?: "Error desconocido al registrar"
+                    uiState = uiState.copy(errorMessage = errorMsg)
+                    Log.e("CreateAccount", "Error al registrar: $errorMsg")
+                }
+            }
+    }
+
+
+
 }

@@ -16,13 +16,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
+import ar.edu.ort.parcial.model.Product
 
 @Composable
-fun ProductCard(product: Product, onAddClick: () -> Unit = {}) {
+fun ProductCard(
+    product: Product,
+    navController: NavHostController,
+    onClick: () -> Unit = {}
+) {
 
     Card(
         shape = RoundedCornerShape(16.dp),
@@ -38,12 +44,10 @@ fun ProductCard(product: Product, onAddClick: () -> Unit = {}) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(id = product.imageRes),
+                painter = rememberAsyncImagePainter(model = product.imageUrl),
                 contentDescription = product.name,
                 modifier = Modifier
-                    .size(100.dp)
-                // .padding(top = 8.dp), // Puedes quitar este padding si no lo necesitas con Arrangement.Center
-                ,
+                    .size(100.dp),
                 contentScale = ContentScale.Fit
             )
             Spacer(modifier = Modifier.height(4.dp)) // Espacio entre imagen y texto
@@ -51,7 +55,9 @@ fun ProductCard(product: Product, onAddClick: () -> Unit = {}) {
             Text("$${product.price}", fontWeight = FontWeight.Bold, fontSize = 16.sp)
             Spacer(modifier = Modifier.height(8.dp)) // Espacio entre precio y botón
             IconButton(
-                onClick = onAddClick,
+                onClick = {
+                    navController.navigate("ProductDetailScreen/${product.category}/${product.id}")
+                },
                 modifier = Modifier
                     .background(Color(0xFF8C52FF), shape = CircleShape)
                     .size(32.dp)
@@ -62,8 +68,3 @@ fun ProductCard(product: Product, onAddClick: () -> Unit = {}) {
     }
 }
 
-data class Product(
-    val name: String,
-    val price: String,
-    val imageRes: Int
-)

@@ -1,7 +1,7 @@
 package ar.edu.ort.parcial.di
 
-import ar.edu.ort.parcial.core.Config
-import ar.edu.ort.parcial.model.ApiService
+import ar.edu.ort.parcial.data.remote.shared.ApiService
+import ar.edu.ort.parcial.data.remote.shared.ApiService.ProductApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,14 +18,14 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://fakestoreapi.com/")
+            .baseUrl("https://dummyjson.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): ProductApiService  {
+        return retrofit.create(ProductApiService ::class.java)
     }
 }

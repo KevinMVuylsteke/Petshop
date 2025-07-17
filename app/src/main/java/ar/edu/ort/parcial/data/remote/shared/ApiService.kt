@@ -1,14 +1,22 @@
-package ar.edu.ort.parcial.model
+package ar.edu.ort.parcial.data.remote.shared
 
-import ar.edu.ort.parcial.data.models.ProductListResponse
-import ar.edu.ort.parcial.data.models.User
+import ar.edu.ort.parcial.model.CartResponse
+import ar.edu.ort.parcial.model.LoginRequest
+import ar.edu.ort.parcial.model.ProductListResponse
+import ar.edu.ort.parcial.model.RegisterRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Path
 
 interface ApiService {
+    interface ProductApiService {
+        @GET("cart/1")
+        suspend fun getCart(): Response<CartResponse>
+    }
+
+
+
     @POST("users")
     suspend fun register(@Body request: RegisterRequest): Response<Unit>
 

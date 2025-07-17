@@ -1,22 +1,22 @@
 package ar.edu.ort.parcial.screens.auth.loginin
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import ar.edu.ort.parcial.model.LoginRequest
-import ar.edu.ort.parcial.model.UserApi
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class LoginInViewModel @Inject constructor(
-    private val userApi: UserApi
 ) : ViewModel() {
 
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val _loading = MutableLiveData(false)
 
     var uiState by mutableStateOf(LoginUiState())
         private set
@@ -50,18 +50,21 @@ class LoginInViewModel @Inject constructor(
 
         return emailValid && passwordValid
     }
+
     fun login(onSuccess: () -> Unit) {
         if (!validateCredentials()) return
 
-        viewModelScope.launch {
-            val response = userApi.login(LoginRequest(uiState.email, uiState.password))
-            if (response.isSuccessful) {
-                uiState = uiState.copy( showPasswordError = false)
-                onSuccess()
-            } else {
-                uiState = uiState.copy( showPasswordError = true)
+        auth.signInWithEmailAndPassword(uiState.email, uiState.password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    uiState = uiState.copy(showPasswordError = false)
+                    Log.d("Login", "Login exitoso con FirebaseAuth")
+                    onSuccess()
+                } else {
+                    Log.e("Login", "Error al iniciar sesión: ${task.exception?.message}")
+                    uiState = uiState.copy(showPasswordError = true)
+                }
             }
-        }
     }
 
     fun clear() {

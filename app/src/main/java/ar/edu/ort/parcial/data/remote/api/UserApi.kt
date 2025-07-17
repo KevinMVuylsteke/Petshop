@@ -1,7 +1,8 @@
+package ar.edu.ort.parcial.data.remote.api
 
-package ar.edu.ort.parcial.model
-
-
+import ar.edu.ort.parcial.data.remote.shared.ApiService
+import ar.edu.ort.parcial.model.LoginRequest
+import ar.edu.ort.parcial.model.RegisterRequest
 import retrofit2.Response
 import javax.inject.Inject
 

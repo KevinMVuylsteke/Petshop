@@ -31,17 +31,18 @@ fun BottomNavBar(navController: NavController) {
             icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Cart") },
             selected = false, // Nunca seleccionado visualmente
             onClick = {
-                //navController.navigate(NavRoutes.CART)
+                navController.navigate(NavRoutes.CART)
             }
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
             selected = false, // Nunca seleccionado visualmente
-            onClick = {navController.navigate(NavRoutes.PROFILE){
-                    popUpTo(NavRoutes.HOME) { saveState = true }
-                    launchSingleTop = true
-                    restoreState = true
-                }
+            onClick = {navController.navigate(NavRoutes.PROFILE)
+            //{
+              //      popUpTo(NavRoutes.HOME) { saveState = true }
+                //    launchSingleTop = true
+                  //  restoreState = true
+                //}
             }
         )
     }

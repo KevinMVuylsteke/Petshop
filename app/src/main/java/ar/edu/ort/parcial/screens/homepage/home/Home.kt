@@ -1,11 +1,13 @@
-package ar.edu.ort.parcial.screens.home
+package ar.edu.ort.parcial.screens.homepage.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,11 +18,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
@@ -35,15 +38,19 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -51,9 +58,14 @@ import ar.edu.ort.parcial.R
 import ar.edu.ort.parcial.navigation.NavRoutes
 import ar.edu.ort.parcial.navigation.NavRoutes.BESTSELLER
 import ar.edu.ort.parcial.ui.components.BottomNavBar
+import ar.edu.ort.parcial.ui.components.ProductCard
+import androidx.compose.runtime.getValue
+import androidx.compose.foundation.lazy.grid.items
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(navController: NavHostController,viewModel: CategoryViewModel = hiltViewModel()
+) {
+    val categories = viewModel.categories
     Scaffold(
         topBar = { TopBar(navController) },
         bottomBar = { BottomNavBar(navController) }
@@ -61,7 +73,7 @@ fun HomeScreen(navController: NavHostController) {
         Column(modifier = Modifier.padding(padding)) {
             LocationSection()
             PromoSection()
-            CategorySection()
+            CategorySection(categories)
             BestSellerSection(navController)
         }
     }
@@ -78,22 +90,17 @@ fun TopBar(navController: NavController) {
                 horizontalArrangement = Arrangement.End,
                 modifier = Modifier.padding(end = 8.dp)
             ) {
-
-
                 Box(
                     modifier = Modifier
                         .size(36.dp)
                         .background(Color.LightGray.copy(alpha = 0.3f), CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    IconButton(onClick = { /* TODO: Search */ }) {
+                    IconButton(onClick = { navController.navigate(NavRoutes.SEARCH) }) {
                         Icon(Icons.Default.Search, contentDescription = "Search", tint = Color.Black)
                     }
                 }
-
                 Spacer(modifier = Modifier.width(8.dp))
-
-
                 Box(
                     modifier = Modifier
                         .size(36.dp)
@@ -116,10 +123,9 @@ fun TopBar(navController: NavController) {
 fun LocationSection() {
     Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 8.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Location", color = Color.Gray, fontSize = 12.sp)
-
+            Text(text = stringResource(id = R.string.home_loc), color = Color.Gray, fontSize = 12.sp)
         }
-        Text("Jebres, Surakarta", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+        Text(text = stringResource(id = R.string.home_ubi), fontSize = 18.sp, fontWeight = FontWeight.Bold)
     }
 }
 
@@ -183,9 +189,13 @@ fun PromoSection() {
     }
 }
 
-
 @Composable
-fun CategorySection() {
+fun CategorySection(categories: List<Category>
+) {
+    val (selectedCategoryId, setSelectedCategoryId) = remember { mutableStateOf<String?>(null) }
+
+    Log.d("CategorySection", "Cantidad de categorías: ${categories.size}")
+
     Column(modifier = Modifier.padding(16.dp)) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -195,20 +205,20 @@ fun CategorySection() {
             Text("View All", color = Color.Gray)
         }
         Spacer(modifier = Modifier.height(8.dp))
-        Row {
-            val categories = listOf("Food", "Toys", "Accessories")
-            categories.forEach { category ->
-                Button(
-                    onClick = { /*TODO*/ },
-                    shape = RoundedCornerShape(20.dp),
 
+        LazyRow {
+            items(categories) { category ->
+                val isSelected = category.id == selectedCategoryId
+                Button(
+                    onClick = { setSelectedCategoryId(category.id) },
+                    shape = RoundedCornerShape(20.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (category == "Food") Color(0xFF7A50E3) else Color.LightGray,
-                        contentColor = Color.White
+                        containerColor = if (isSelected) Color(0xFF7A50E3) else Color.LightGray,
+                        contentColor = if (isSelected) Color.White else Color.Black
                     ),
                     modifier = Modifier.padding(end = 8.dp)
                 ) {
-                    Text(category)
+                    Text(category.name)
                 }
             }
         }
@@ -216,59 +226,61 @@ fun CategorySection() {
 }
 
 @Composable
-fun BestSellerSection(navController: NavHostController) {
+fun BestSellerSection(
+    navController: NavHostController,
+    viewModel: BestSellerSelectionViewModel = hiltViewModel()
+) {
+    val products by viewModel.products.collectAsState()
+
     Column(modifier = Modifier.padding(16.dp)) {
-        Row(horizontalArrangement = Arrangement.SpaceBetween,
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text( text = "Best Seller",
+            Text(
+                text = "Best Seller",
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                lineHeight = 29.sp, // 180% of 16px = 28.8px ≈ 29.sp
-                letterSpacing = 0.sp,
-                fontFamily = FontFamily.Default )
+                fontWeight = FontWeight.Bold
+            )
             Text(
                 text = "View All",
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
-                lineHeight = 19.sp,
-                letterSpacing = 0.sp,
                 color = Color(0xFF7140FD),
-                fontFamily = FontFamily.Default,
-                modifier = Modifier.clickable { navController.navigate(BESTSELLER) }
+                modifier = Modifier.clickable {
+                    navController.navigate(BESTSELLER)
+                }
             )
         }
-        Spacer(modifier = Modifier.height(8.dp))
-        LazyRow {
-            items(listOf("RC Kitten" to "$20.99", "RC Persian" to "$22.99")) { (name, price) ->
-                ProductItem(name, price)
-            }
-        }
-    }
-}
 
-@Composable
-fun ProductItem(name: String, price: String) {
-    Card(
-        shape = RoundedCornerShape(16.dp),
-        modifier = Modifier
-            .padding(end = 16.dp)
-            .width(160.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.fotocomidaperros),
-                contentDescription = "Product",
-                modifier = Modifier.height(100.dp)
-            )
-            Text(name, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-            Text(price, fontSize = 12.sp)
-            IconButton(onClick = { /*TODO: Add to cart*/ }) {
-                Icon(Icons.Default.Add, contentDescription = "Add")
+        Spacer(modifier = Modifier.height(8.dp))
+
+        if (products.isNotEmpty()) {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(0.dp)
+            ) {
+                items(products.take(2)) { product ->
+                    ProductCard(
+                        product = product,
+                        navController = navController,
+                        onClick = {
+                            navController.navigate("ProductDetailScreen/${product.category}/${product.id}")
+                            Log.d("HomeScreen", "Best Seller item clicked: ${product.id}")
+                        }
+                    )
+                }
             }
+        } else {
+            Text(
+                text = "Cargando productos...",
+                modifier = Modifier.padding(8.dp),
+                fontSize = 14.sp,
+                color = Color.Gray
+            )
         }
     }
 }

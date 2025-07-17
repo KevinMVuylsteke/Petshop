@@ -1,5 +1,6 @@
-package ar.edu.ort.parcial.data.models
+package ar.edu.ort.parcial.model
 
+/*
 data class Product(
     val id: Int,
     val title: String,
@@ -13,6 +14,7 @@ data class Product(
     val thumbnail: String,
     val images: List<String>
 )
+*/
 
 data class ProductListResponse(
     val products: List<Product>,
