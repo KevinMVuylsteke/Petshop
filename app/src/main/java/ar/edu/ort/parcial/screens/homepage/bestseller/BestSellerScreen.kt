@@ -1,6 +1,5 @@
 package ar.edu.ort.parcial.screens.homepage.bestseller
 
-
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -20,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.ort.parcial.R
+import ar.edu.ort.parcial.ui.components.MyTopBar
 import ar.edu.ort.parcial.ui.components.ProductCard
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,25 +32,15 @@ fun BestSellerScreen(
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(id = R.string.best_seller_title),
-                        textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
-            )
+            MyTopBar(
+                title = stringResource(id = R.string.best_seller_title)
+            ) {
+                navController.popBackStack()
+            }
         },
         containerColor = Color.White
-    ) { paddingValues ->
+    )
+    { paddingValues ->
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(16.dp),

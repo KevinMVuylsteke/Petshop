@@ -26,6 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import androidx.navigation.NavHostController
 import ar.edu.ort.parcial.R
+import ar.edu.ort.parcial.ui.components.ButtonCom
 import coil.compose.AsyncImage
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -202,18 +203,15 @@ fun ProductDetailScreen(
                     color = Color.Black
                 )
             }
-
-            Button(
-                onClick = { /* TODO: Handle Add to Cart action */ },
+            ButtonCom(
+                text = "Add to Cart",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
                     .padding(bottom = 16.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8C52FF)),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text("Add to Cart", fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
-            }
+                onClick = {
+                    navController.navigate("cart")
+                }
+            )
         }
     }
 }

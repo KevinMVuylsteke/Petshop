@@ -142,9 +142,6 @@ fun LoginIn(navController: NavHostController,
                             popUpTo("LoginIn") { inclusive = true }
                         }
                     }
-                    //if (viewModel.validateCredentials()) {
-                    //    navController.navigate("Home")
-                    //}
                 }
             )
         }

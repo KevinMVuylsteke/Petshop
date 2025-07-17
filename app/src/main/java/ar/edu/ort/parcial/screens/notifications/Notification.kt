@@ -1,6 +1,5 @@
 package ar.edu.ort.parcial.screens.notifications
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,7 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,6 +19,7 @@ import ar.edu.ort.parcial.ui.components.AccionDerechaNotificacion
 import ar.edu.ort.parcial.ui.components.AvatarNotificacion
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import ar.edu.ort.parcial.ui.components.MyTopBar
 
 
 enum class TabNotificacion {
@@ -35,33 +35,15 @@ fun NotificationScreen(navController: NavController,tabInicial: TabNotificacion 
             .fillMaxSize()
             .background(Color.White)
     ) {
-        BarraSuperiorNotificacion(navController)
+        MyTopBar(
+            title = stringResource(id = R.string.notification_title),
+            onBackClick = { navController.popBackStack() }
+        )
         TabsNotificacion(tabSeleccionado) { tabSeleccionado = it }
         when (tabSeleccionado) {
             TabNotificacion.Actividad -> ContenidoActividad()
             TabNotificacion.ModoVendedor -> ContenidoModoVendedor()
         }
-    }
-}
-
-@Composable
-fun BarraSuperiorNotificacion(navController: NavController) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.arrowleft),
-            //imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-            contentDescription = "Volver",
-            modifier = Modifier
-                .size(24.dp)
-                .clickable { navController.popBackStack() }
-        )
-        Spacer(modifier = Modifier.width(26.dp))
-        Text("Notification", fontSize = 20.sp, fontWeight = FontWeight.Bold)
     }
 }
 

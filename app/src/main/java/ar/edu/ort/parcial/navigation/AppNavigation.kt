@@ -13,6 +13,7 @@ import ar.edu.ort.parcial.screens.notifications.NotificationScreen
 import ar.edu.ort.parcial.screens.profile.ProfileScreen
 import ar.edu.ort.parcial.screens.profile.SellerScreen
 import ar.edu.ort.parcial.screens.homepage.bestseller.BestSellerScreen
+import ar.edu.ort.parcial.screens.homepage.cart.Cart
 import ar.edu.ort.parcial.screens.homepage.productdetail.ProductDetailScreen
 import ar.edu.ort.parcial.screens.homepage.search.Search
 
@@ -27,6 +28,7 @@ object NavRoutes {
     const val BESTSELLER = "BestSeller"
     const val PRODUCTDETAIL = "ProductDetailScreen"
     const val SEARCH = "SearchScreen"
+    const val CART = "Cart"
 }
 
 @Composable
@@ -67,6 +69,8 @@ fun AppNavigation(navController: NavHostController, viewModel: MainActivityViewM
         composable(NavRoutes.SEARCH) {
             Search(navController)
         }
-
+        composable(NavRoutes.CART) {
+            Cart(navController)
+        }
     }
 }
