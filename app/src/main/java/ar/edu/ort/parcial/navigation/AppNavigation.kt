@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import ar.edu.ort.parcial.MainActivityViewModel
+import ar.edu.ort.parcial.ui.viewmodel.MainActivityViewModel
 import ar.edu.ort.parcial.screens.onboarding.Onboarding
 import ar.edu.ort.parcial.screens.auth.loginin.LoginIn
 import ar.edu.ort.parcial.screens.auth.createaccount.CreateAccount

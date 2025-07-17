@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial.data.remote
+package ar.edu.ort.parcial.data.repository
 
 import android.util.Log
 import ar.edu.ort.parcial.model.ProductDetail

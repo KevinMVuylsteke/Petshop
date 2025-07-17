@@ -1,4 +1,4 @@
-package ar.edu.ort.parcial
+package ar.edu.ort.parcial.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 data class UiState (

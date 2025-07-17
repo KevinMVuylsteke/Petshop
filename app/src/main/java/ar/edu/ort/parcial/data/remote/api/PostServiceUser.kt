@@ -1,6 +1,6 @@
-package ar.edu.ort.parcial.shared
+package ar.edu.ort.parcial.data.remote.api
 
-import ar.edu.ort.parcial.shared.ApiService
+import ar.edu.ort.parcial.data.remote.shared.ApiService
 import ar.edu.ort.parcial.model.RegisterRequest
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers

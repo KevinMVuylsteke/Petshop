@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.ort.parcial.data.local.FavoriteDao
 import ar.edu.ort.parcial.data.local.FavoriteIdEntity
-import ar.edu.ort.parcial.data.remote.ProductRepository
+import ar.edu.ort.parcial.data.repository.ProductRepository
 import ar.edu.ort.parcial.model.ProductDetail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

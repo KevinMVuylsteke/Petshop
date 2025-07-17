@@ -33,7 +33,7 @@ import androidx.navigation.compose.rememberNavController
 
 
 import androidx.lifecycle.viewmodel.compose.viewModel
-import ar.edu.ort.parcial.shared.UserApi
+import ar.edu.ort.parcial.data.remote.api.UserApi
 
 @Composable
 fun CreateAccount(
